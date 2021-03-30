@@ -1,0 +1,15 @@
+import React from "react";
+import Tables from "../Components/CardTable/CardTable";
+import Index from "./index";
+
+export default function UsersTable() {
+  return (
+    <>
+      <div className="pt-4 md:pt-32">
+        <Tables />
+      </div>
+    </>
+  );
+}
+
+UsersTable.layout = Index;
