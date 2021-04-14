@@ -31,8 +31,7 @@ export default function sideBar({}: Props): ReactElement {
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
-            <li className="inline-block relative">
-            </li>
+            <li className="inline-block relative"></li>
             <li className="inline-block relative">
               <DropDown />
             </li>
@@ -76,12 +75,12 @@ export default function sideBar({}: Props): ReactElement {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link href="/UserInfo">
+                <Link href="/users">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/UsesrManagement/") !== -1
+                      (router.pathname.indexOf("/users") !== -1
                         ? "text-blue-500 hover:text-blue-600"
                         : "text-gray-800 hover:text-gray-600")
                     }
@@ -89,7 +88,7 @@ export default function sideBar({}: Props): ReactElement {
                     <i
                       className={
                         "bx bxs-user mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/dashboard") !== -1
+                        (router.pathname.indexOf("/users") !== -1
                           ? "opacity-75"
                           : "text-gray-400")
                       }
@@ -100,7 +99,7 @@ export default function sideBar({}: Props): ReactElement {
               </li>
 
               <li className="items-center">
-                <Link href="/UsersTable">
+                <Link href="/usersTable">
                   <a
                     href="#pablo"
                     className={

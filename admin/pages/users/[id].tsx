@@ -1,7 +1,58 @@
-import React from "react";
-import Index from "./index";
+import {useRouter} from "next/router";
+import React, { ReactElement, useEffect, useState } from "react";
+import Axios from "axios";
+import Index from "../index";
+import { User } from "../../interface/user";
 
-export default function UserInfo() {
+export const getServerSideProps = async ({params}) => {
+  const id = params.id;
+  return {
+     props: { id }
+  }
+}
+
+export default function UserInfo(props) {
+
+  const id = props.id;
+
+  const [user, setUser] = useState<User>({
+    accountType: 1,
+    id: "",
+    email: "",
+    userName: "",
+    phoneNumber: "",
+    phoneNumberConfirmedL: "",
+    birthDate: null,
+    createdDate: null,
+    addressLine: [],
+    city: "",
+    country: "",
+    avatarUrl: "",
+    lockoutEnabled: true,
+    fullName: "",
+    lockoutEnd: "",
+  });
+
+  useEffect(() => {
+    async function fetchdata() {
+      console.log(1231)
+      await Axios.get("http://localhost:5009/api/user/" + id + "/details", {
+        headers: {
+          Authorization:
+            "Bearer " +
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwicm9sZSI6IkFkbWluIiwibmFtZWlkIjoiNTI1MGJiZTYtZDMxMy00YmM4LWI1MzUtMDdjZWUyY2RmYmQ5IiwibmJmIjoxNjE4NDA0OTEyLCJleHAiOjE2MTg0MTIxMTIsImlhdCI6MTYxODQwNDkxMiwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.eaARZEHix7c887HZVBHY7aAKa9y-xuDWNR0fA0HIHr0",
+        },
+      })
+        .then((res) => {
+          console.log(res.data.data);
+          setUser(res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    fetchdata();
+  }, []);
   return (
     <div className="pt-4 md:pt-32">
       <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-white border-0">
@@ -23,7 +74,7 @@ export default function UserInfo() {
                 >
                   Username
                 </label>
-                <label className="py-3">Nguyen Tuan</label>
+                <label className="py-3">{user.userName}</label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -34,7 +85,7 @@ export default function UserInfo() {
                 >
                   Email address
                 </label>
-                <label className="py-3">Huutuan345679@gmail.com</label>
+                <label className="py-3">{user.email}</label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -45,7 +96,7 @@ export default function UserInfo() {
                 >
                   First Name
                 </label>
-                <label className="py-3">Nguyen</label>
+                <label className="py-3">{user.birthDate == null? 'nothing' : user.birthDate}</label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">

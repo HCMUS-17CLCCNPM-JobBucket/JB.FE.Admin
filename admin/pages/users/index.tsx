@@ -1,6 +1,6 @@
 import React from "react";
-import Tables from "../Components/CardTable/CardTable";
-import Index from "./index";
+import Tables from "../../Components/CardTable/CardTable";
+import Index from "../index";
 
 export default function UsersTable() {
   return (

@@ -1,47 +1,33 @@
-import React, { ReactElement, useState } from "react";
-import {useRouter} from 'next/router'
-interface Props {}
+import React, { ReactElement, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Axios from "axios";
+import { User } from "../../interface/user";
 
-export default function CardTable({}: Props): ReactElement {
+export default function CardTable() {
   const router = useRouter();
 
-  const [dummydata, setdata] = useState([
-    {
-      number: 1,
-      name: "nguyen huu tuan",
-      createDate: "11/09/1999",
-      role: "Admin",
-      status: "active",
-    },
-    {
-      number: 2,
-      name: "nguyen huu thang",
-      createDate: "11/09/1999",
-      role: "Admin",
-      status: "active",
-    },
-    {
-      number: 3,
-      name: "nguyen huu thanh",
-      createDate: "11/09/1999",
-      role: "Admin",
-      status: "active",
-    },
-    {
-      number: 4,
-      name: "nguyen huu truong",
-      createDate: "11/09/1999",
-      role: "Admin",
-      status: "active",
-    },
-    {
-      number: 5,
-      name: "nguyen huu tien",
-      createDate: "11/09/1999",
-      role: "Admin",
-      status: "active",
-    },
-  ]);
+  const [user, setUser] = useState<Array<User>>([]);
+
+  useEffect(() => {
+    async function fetchdata() {
+      await Axios.get("http://localhost:5009/api/user", {
+        headers: {
+          Authorization:
+            "Bearer " +
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwicm9sZSI6IkFkbWluIiwibmFtZWlkIjoiNTI1MGJiZTYtZDMxMy00YmM4LWI1MzUtMDdjZWUyY2RmYmQ5IiwibmJmIjoxNjE4NDA0OTEyLCJleHAiOjE2MTg0MTIxMTIsImlhdCI6MTYxODQwNDkxMiwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.eaARZEHix7c887HZVBHY7aAKa9y-xuDWNR0fA0HIHr0",
+        },
+      })
+        .then((res) => {
+          console.log(res.data.data)
+          console.log(user)
+          setUser(res.data.data);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    fetchdata();
+  }, []);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded bg-white ">
@@ -67,10 +53,7 @@ export default function CardTable({}: Props): ReactElement {
                   Date Create
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Role
-                </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Status
+                  BirthDay
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
                   Action
@@ -78,10 +61,14 @@ export default function CardTable({}: Props): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {dummydata.map((data, key) => (
-                <tr className="cursor-pointer" key={key} onClick={()=>router.push("/UserInfo")}>
+              {user.map((data, key) => (
+                <tr
+                  className="cursor-pointer"
+                  key={key}
+                  onClick={() => router.push("/users/" + data.id)}
+                >
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {data.number}
+                    1
                   </td>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center">
                     <img
@@ -90,17 +77,14 @@ export default function CardTable({}: Props): ReactElement {
                       src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     ></img>
                     <span className="ml-3 font-bold text-gray-700 ">
-                      {data.name}
+                      {data.userName}
                     </span>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {data.createDate}
+                    {data.createdDate}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {data.role}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {data.status}
+                    {data.accountType}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     <button className="" type="button">
