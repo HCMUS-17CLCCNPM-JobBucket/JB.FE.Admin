@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Axios from "axios";
 import { User } from "../../interface/user";
-
+import LockDialog from "../Dialog/LockDialog";
 export default function CardTable() {
   const router = useRouter();
 
@@ -10,16 +10,20 @@ export default function CardTable() {
 
   useEffect(() => {
     async function fetchdata() {
-      await Axios.get("http://localhost:5009/api/user", {
-        headers: {
-          Authorization:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwicm9sZSI6IkFkbWluIiwibmFtZWlkIjoiNTI1MGJiZTYtZDMxMy00YmM4LWI1MzUtMDdjZWUyY2RmYmQ5IiwibmJmIjoxNjE4NDA0OTEyLCJleHAiOjE2MTg0MTIxMTIsImlhdCI6MTYxODQwNDkxMiwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.eaARZEHix7c887HZVBHY7aAKa9y-xuDWNR0fA0HIHr0",
-        },
-      })
+      await Axios.post(
+        "http://128.199.249.40:5008/api/user/listUser",
+        {},
+        {
+          headers: {
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjExODE2NjIsImV4cCI6MTYyMTE4ODg2MiwiaWF0IjoxNjIxMTgxNjYyLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.f7PFIwL8Rsmq_OYHVlEA_jb4IOn9jvblaOIE8m8RMho",
+          },
+        }
+      )
         .then((res) => {
-          console.log(res.data.data)
-          console.log(user)
+          console.log(res.data.data);
+          console.log(user);
           setUser(res.data.data);
         })
         .catch((error) => {
@@ -62,15 +66,14 @@ export default function CardTable() {
             </thead>
             <tbody>
               {user.map((data, key) => (
-                <tr
-                  className="cursor-pointer"
-                  key={key}
-                  onClick={() => router.push("/users/" + data.id)}
-                >
+                <tr className="cursor-pointer" key={key}>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     1
                   </td>
-                  <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center">
+                  <th
+                    className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center"
+                    onClick={() => router.push("/users/" + data.id)}
+                  >
                     <img
                       className="h-12 w-12 bg-white rounded-full border"
                       alt="..."
@@ -87,12 +90,7 @@ export default function CardTable() {
                     {data.accountType}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    <button className="" type="button">
-                      <i
-                        className="bx bx-trash bx-sm"
-                        style={{ color: "red" }}
-                      ></i>
-                    </button>
+                    <LockDialog id={data.id}></LockDialog>
                   </td>
                 </tr>
               ))}

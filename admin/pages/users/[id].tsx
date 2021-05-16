@@ -36,7 +36,7 @@ export default function UserInfo(props) {
   useEffect(() => {
     async function fetchdata() {
       console.log(1231)
-      await Axios.get("http://localhost:5009/api/user/" + id + "/details", {
+      await Axios.get("http://128.199.249.40:5008/api/user/" + id + "/details", {
         headers: {
           Authorization:
             "Bearer " +
