@@ -73,10 +73,10 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
   integrity sha512-CAEbWH7OIur6jEOzaai83jq3FmKmv4PmX1JYfs9IrYcGEVI/lyL1EXJGCj7eFVJ0bg5QR8LMxBlEtA+xKiLpFw==
 
-"@headlessui/react@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.2.0.tgz#e48652bfce82ddf73d7f331faeb9db6526ee6874"
-  integrity sha512-19DkLz8gDgbi+WvkoTzi9vs0NK9TJf94vbYhMzB4LYJo03Kili0gmvXT9CiKZoxXZ7YAvy/b1U1oQKEnjWrqxw==
+"@headlessui/react@^1.2.0-2279cd9":
+  version "1.2.0-2279cd9"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.2.0-2279cd9.tgz#93ba05ca8ff4d95ae50e269963c0f9a4e8a43958"
+  integrity sha512-vZIEDAic0TAvB5wcvv2mnZ4avOV9muQ1vcKLpqF2T2ZYqR6LZ47w/OwFU4oP4IxZTNx+JqFgDARSvWvTa/Cg9g==
 
 "@next/env@10.0.9":
   version "10.0.9"

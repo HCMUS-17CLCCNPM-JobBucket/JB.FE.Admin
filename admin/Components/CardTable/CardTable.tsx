@@ -3,7 +3,10 @@ import { useRouter } from "next/router";
 import Axios from "axios";
 import { User } from "../../interface/user";
 import LockDialog from "../Dialog/LockDialog";
+import UnlockDialog from "../Dialog/UnlockDialog";
 export default function CardTable() {
+  let today = new Date();
+
   const router = useRouter();
 
   const [user, setUser] = useState<Array<User>>([]);
@@ -17,7 +20,7 @@ export default function CardTable() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjExODE2NjIsImV4cCI6MTYyMTE4ODg2MiwiaWF0IjoxNjIxMTgxNjYyLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.f7PFIwL8Rsmq_OYHVlEA_jb4IOn9jvblaOIE8m8RMho",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjE0NDIxODksImV4cCI6MTYyMTQ0OTM4OSwiaWF0IjoxNjIxNDQyMTg5LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.aqvhP7sZqQPtfm0Ya3DIU-ZPGGFg00JWr9vu62dfsls",
           },
         }
       )
@@ -32,6 +35,7 @@ export default function CardTable() {
     }
     fetchdata();
   }, []);
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded bg-white ">
@@ -84,13 +88,17 @@ export default function CardTable() {
                     </span>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {data.createdDate}
+                    {Date.parse(data.lockoutEnd) - today.getTime()}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     {data.accountType}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    <LockDialog id={data.id}></LockDialog>
+                    {Date.parse(data.lockoutEnd) - today.getTime() > 0  ? (
+                      <UnlockDialog id={data.id}></UnlockDialog>
+                    ) : (
+                      <LockDialog id={data.id}></LockDialog>
+                    )}
                   </td>
                 </tr>
               ))}

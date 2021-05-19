@@ -2,16 +2,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Axios from "axios";
 
-export default function MyModal(props) {
-  // add a day
-  const [isOpen, setIsOpen] = useState(false);
-  const [lockList, setLockList] = useState([
-    { name: "7 days", value: 7 },
-    { name: "1 months", value: 30 },
-    { name: "6 months", value: 180 },
-  ]);
 
-  const [duaration, setDuaration] = useState("7");
+export default function MyModal(props) {
+  let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -21,18 +14,10 @@ export default function MyModal(props) {
     setIsOpen(true);
   }
 
-  function handleDurationChange(e) {
-    setDuaration(e.target.value);
-  }
-
-  async function onLockUser() {
-    let date = new Date();
-    // add a day
-    date.setDate(date.getDate() + parseInt(duaration));
+  async function UnlockUser() {
 
     await Axios.put(
-      "http://128.199.249.40:5008/api/user/" + props.id + "/lock",
-      { lockUntil: date.toISOString() },
+      "http://128.199.249.40:5008/api/user/" + props.id + "/unlock",{},
       {
         headers: {
           Authorization:
@@ -42,13 +27,13 @@ export default function MyModal(props) {
       }
     )
       .then((res) => {
-        alert("delete success");
+        alert("unlock success");
       })
       .catch((error) => {
         alert(error);
       });
-      console.log(props.id, duaration, date.toISOString());
   }
+  
 
   return (
     <>
@@ -57,7 +42,7 @@ export default function MyModal(props) {
         onClick={openModal}
         className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
       >
-        Lock
+        Unlock
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -100,37 +85,21 @@ export default function MyModal(props) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Lock user
+                  Unlock User
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Choose how long the user be lockout?
+                    Do you want to unlock this user {props.id}?
                   </p>
-                  <select
-                    className="form-select block py-2 pl-2 mt-4"
-                    onChange={(e) => handleDurationChange(e)}
-                  >
-                    {lockList.map((value, key) => (
-                      <option key={value.value} value={value.value}>
-                        {value.name}
-                      </option>
-                    ))}
-                  </select>
                 </div>
-                <div className="mt-4 flex justify-between ">
+
+                <div className="mt-4">
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={onLockUser}
+                    onClick={UnlockUser}
                   >
-                    Lock {props.id}
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
-                    onClick={closeModal}
-                  >
-                    Cancel
+                    Yes
                   </button>
                 </div>
               </div>

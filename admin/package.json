@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "^1.2.0",
+    "@headlessui/react": "^1.2.0-2279cd9",
     "@types/popper.js": "^1.11.0",
     "axios": "^0.21.1",
     "boxicons": "^2.0.7",
