@@ -2,7 +2,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Axios from "axios";
 
-
 export default function MyModal(props) {
   let [isOpen, setIsOpen] = useState(false);
 
@@ -15,25 +14,27 @@ export default function MyModal(props) {
   }
 
   async function UnlockUser() {
-
     await Axios.put(
-      "http://128.199.249.40:5008/api/user/" + props.id + "/unlock",{},
+      "http://128.199.249.40:5008/api/user/" + props.id + "/unlock",
+      {},
       {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjE0NDEwMTAsImV4cCI6MTYyMTQ0ODIxMCwiaWF0IjoxNjIxNDQxMDEwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.K9x8d9z64y-jDeRMl8k2uHZwcXVvW1SjJT0d0DjBLkg",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjI0NzEyOTQsImV4cCI6MTYyMjQ3ODQ5NCwiaWF0IjoxNjIyNDcxMjk0LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.CY7KQ3M5DyxP3ic_aELPBpa-pLSCe8ixp79QEurqXOI",
         },
       }
     )
       .then((res) => {
-        alert("unlock success");
+        if ((res.status = 200)) {
+          alert("unlock success");
+          props.setunlock(false);
+        }
       })
       .catch((error) => {
         alert(error);
       });
   }
-  
 
   return (
     <>

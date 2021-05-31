@@ -37,17 +37,20 @@ export default function MyModal(props) {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjE0NDEwMTAsImV4cCI6MTYyMTQ0ODIxMCwiaWF0IjoxNjIxNDQxMDEwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.K9x8d9z64y-jDeRMl8k2uHZwcXVvW1SjJT0d0DjBLkg",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjI0NzEyOTQsImV4cCI6MTYyMjQ3ODQ5NCwiaWF0IjoxNjIyNDcxMjk0LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.CY7KQ3M5DyxP3ic_aELPBpa-pLSCe8ixp79QEurqXOI",
         },
       }
     )
       .then((res) => {
-        alert("delete success");
+        if (res.status == 200) {
+          alert("lock success");
+          props.setlock(true);
+        }
       })
       .catch((error) => {
         alert(error);
       });
-      console.log(props.id, duaration, date.toISOString());
+    console.log(props.id, duaration, date.toISOString());
   }
 
   return (

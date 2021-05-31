@@ -1,17 +1,16 @@
 import SideBar from "../Components/SideBar/sideBar";
 import NavBar from "../Components/NavBar/navBar";
-import Footer from '../Components/Footer/Footer';
+import Footer from "../Components/Footer/Footer";
+import React, { useState, useEffect } from "react";
 
-export default function Home({children}) {
+export default function Home({ children }) {
   return (
     <>
       <SideBar />
       <div className="relative md:ml-64">
         <NavBar />
         <div className="px:0 md:px-12 mx-auto w-full flex flex-col bg-gray-200 min-h-screen">
-          <div className="flex-grow">
-          {children}
-          </div>
+          <div className="flex-grow">{children}</div>
           <Footer></Footer>
         </div>
       </div>

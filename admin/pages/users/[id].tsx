@@ -35,16 +35,14 @@ export default function UserInfo(props) {
 
   useEffect(() => {
     async function fetchdata() {
-      console.log(1231)
       await Axios.get("http://128.199.249.40:5008/api/user/" + id + "/details", {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwicm9sZSI6IkFkbWluIiwibmFtZWlkIjoiNTI1MGJiZTYtZDMxMy00YmM4LWI1MzUtMDdjZWUyY2RmYmQ5IiwibmJmIjoxNjE4NDA0OTEyLCJleHAiOjE2MTg0MTIxMTIsImlhdCI6MTYxODQwNDkxMiwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.eaARZEHix7c887HZVBHY7aAKa9y-xuDWNR0fA0HIHr0",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjI0NzEyOTQsImV4cCI6MTYyMjQ3ODQ5NCwiaWF0IjoxNjIyNDcxMjk0LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.CY7KQ3M5DyxP3ic_aELPBpa-pLSCe8ixp79QEurqXOI",
         },
       })
         .then((res) => {
-          console.log(res.data.data);
           setUser(res.data.data);
         })
         .catch((error) => {
