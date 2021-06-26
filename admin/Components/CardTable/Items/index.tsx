@@ -8,16 +8,22 @@ export default function index({ data }) {
     Date.parse(data.lockoutEnd) - Date.now() > 0
   );
 
+  const handlesetLock = (countdown) =>{
+    setLock(true)
+    setTimeout(() => {
+      setLock(false);
+    }, countdown);
+  }
 
   useEffect(() => {
     if (isLock) {
       let countdown = Date.parse(data.lockoutEnd) - Date.now();
       console.log(countdown);
-      // setTimeout(() => {
-      //   setLock(false);
-      // }, countdown*1000);
+      setTimeout(() => {
+        setLock(false);
+      }, countdown);
     }
-  }, [isLock]);
+  }, []);
 
   return (
     <tr className="cursor-pointer">
@@ -45,9 +51,10 @@ export default function index({ data }) {
         {isLock ? (
           <UnlockDialog id={data.id} setunlock={setLock}></UnlockDialog>
         ) : (
-          <LockDialog id={data.id} setlock={setLock}></LockDialog>
+          <LockDialog id={data.id} setlock={(countdown) =>handlesetLock(countdown)}></LockDialog>
         )}
       </td>
     </tr>
   );
 }
+
