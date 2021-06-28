@@ -3,26 +3,9 @@ import Index from "./index";
 import Expanded from "../Components/Expand";
 import Axios from "axios";
 
-
 export default function Reports() {
-  
-  const [resolveFilter, setFilter] = useState(false);
-  const [reports, setReports] = useState([
-    {
-      id: 1,
-      content: "",
-      user: {
-        id: 1,
-        avatarUrl: "",
-        fullName: "",
-        email: "",
-      },
-      createdDate: "",
-      resolvedDate: "",
-      isResolved: false,
-      tags: [],
-    },
-  ]);
+  const [resolveFilter, setFilter] = useState(true);
+  const [reports, setReports] = useState([]);
 
   useEffect(() => {
     async function fetchdata() {
@@ -41,7 +24,7 @@ export default function Reports() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ3MTM3MTMsImV4cCI6MTYyNDcyMDkxMywiaWF0IjoxNjI0NzEzNzEzLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.aymWYVLDsoUQuSf3YtJW2qxi82HdZaN3EekftBGjee8",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ4OTgzODgsImV4cCI6MTYyNDkwNTU4OCwiaWF0IjoxNjI0ODk4Mzg4LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.QpnW2cShAL_1_zU578XQ-XdpCTHKrX94ur3Nvf-etxY",
           },
         }
       )

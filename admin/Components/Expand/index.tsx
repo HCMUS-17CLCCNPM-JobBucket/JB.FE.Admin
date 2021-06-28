@@ -3,9 +3,10 @@ import { Disclosure } from "@headlessui/react";
 import Axios from "axios";
 
 
+
 export default function Expanded(props) {
   const [isResolved, setResolve] = useState(props.isResolved);
-  console.log(isResolved);
+  console.log(props.isResolved);
 
 
   async function onResolveReport() {
@@ -16,7 +17,7 @@ export default function Expanded(props) {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ3MTM3MTMsImV4cCI6MTYyNDcyMDkxMywiaWF0IjoxNjI0NzEzNzEzLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.aymWYVLDsoUQuSf3YtJW2qxi82HdZaN3EekftBGjee8",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ3MjE5NzksImV4cCI6MTYyNDcyOTE3OSwiaWF0IjoxNjI0NzIxOTc5LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.90kEh18AEnwmPURf9bs-f1rhxYKV0r6fb1uRAO7SL-Y",
         },
       }
     )

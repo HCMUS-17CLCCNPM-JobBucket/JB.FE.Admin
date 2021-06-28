@@ -2,12 +2,9 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Axios from "axios";
 import { User } from "../../interface/user";
-import LockDialog from "../Dialog/LockDialog";
-import UnlockDialog from "../Dialog/UnlockDialog";
-import Items from './Items'
+import Items from "./Items";
+import Pagination from "../pagination";
 export default function CardTable() {
-
-  const router = useRouter();
 
   const [user, setUser] = useState<Array<User>>([]);
 
@@ -73,82 +70,6 @@ export default function CardTable() {
             </tbody>
           </table>
           <hr></hr>
-          <nav className="block float-right mr-8 my-4">
-            <ul className="flex pl-0 rounded list-none flex-wrap">
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  <i className="bx bxs-chevrons-left -ml-px"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  <i className="bx bxs-chevron-left -ml-px"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  1
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  2
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  3
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  4
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  5
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  <i className="bx bxs-chevron-right -mr-px"></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#pablo"
-                  className="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blueGray-500 bg-white text-blueGray-500"
-                >
-                  <i className="bx bxs-chevrons-right -mr-px"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
     </>
