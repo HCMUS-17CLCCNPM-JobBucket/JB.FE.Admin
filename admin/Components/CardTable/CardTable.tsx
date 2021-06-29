@@ -3,21 +3,33 @@ import { useRouter } from "next/router";
 import Axios from "axios";
 import { User } from "../../interface/user";
 import Items from "./Items";
-import Pagination from "../pagination";
+import Pagination from "../Pagination";
 export default function CardTable() {
-
-  const [user, setUser] = useState<Array<User>>([]);
+  const [user, setUser] = useState([]);
+  const [currentPage, setCurrentPage] = useState(2);
+  const [length, setLength] = useState(0);
+  const [lockFilter, setLockFilter] = useState('<=');
 
   useEffect(() => {
     async function fetchdata() {
+      const date = new Date();
       await Axios.post(
-        "http://128.199.249.40:5008/api/user/listUser",
-        {},
+        "http://128.199.64.229:5008/api/user/listUser",
+        {
+          page: currentPage - 1,
+          filters: [
+            {
+              property: "birthDate",
+              value: date.toISOString(),
+              comparison: lockFilter,
+            },
+          ],
+        },
         {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjI1NDMzNDQsImV4cCI6MTYyMjU1MDU0NCwiaWF0IjoxNjIyNTQzMzQ0LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.fzIYS4UatgVx1HAj3LPgL0HDX89chnOZ067JEz6sFmI",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ5NTg1MjIsImV4cCI6MTYyNDk2NTcyMiwiaWF0IjoxNjI0OTU4NTIyLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.0TZ4RaVPsY3fnTfcV6X3CpSPNYLjfYpdiN4DaSWHjQ8",
           },
         }
       )
@@ -27,9 +39,34 @@ export default function CardTable() {
         .catch((error) => {
           alert(error);
         });
+      await Axios.post(
+        "http://128.199.64.229:5008/api/user/count",
+        {
+          filters: [
+            {
+              property: "birthDate",
+              value: date.toISOString(),
+              comparison: lockFilter,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ5NTg1MjIsImV4cCI6MTYyNDk2NTcyMiwiaWF0IjoxNjI0OTU4NTIyLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.0TZ4RaVPsY3fnTfcV6X3CpSPNYLjfYpdiN4DaSWHjQ8",
+          },
+        }
+      )
+        .then((res) => {
+          setLength(res.data.data);
+        })
+        .catch((error) => {
+          alert(error);
+        });
     }
     fetchdata();
-  }, []);
+  }, [currentPage, lockFilter]);
 
   return (
     <>
@@ -39,6 +76,7 @@ export default function CardTable() {
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
               <h6 className="text-gray-800 text-xl font-bold">Users List</h6>
             </div>
+            {lockFilter =='<=' ? <button onClick={()=>setLockFilter('>=')}>all</button>: <button onClick={()=>setLockFilter('<=')}>nothing</button>}
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
@@ -70,6 +108,13 @@ export default function CardTable() {
             </tbody>
           </table>
           <hr></hr>
+          {length !== 0 && (
+            <Pagination
+              pages={length}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
         </div>
       </div>
     </>
