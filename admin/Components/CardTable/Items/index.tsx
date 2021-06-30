@@ -16,7 +16,7 @@ export default function index({ data }) {
   }
 
   useEffect(() => {
-    if (isLock) {
+    if (data.isLockedOut) {
       let countdown = Date.parse(data.lockoutEnd) - Date.now();
       setTimeout(() => {
         setLock(false);
@@ -26,28 +26,25 @@ export default function index({ data }) {
 
   return (
     <tr className="cursor-pointer">
-      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        1
-      </td>
       <th
         className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center"
         onClick={() => router.push("/users/" + data.id)}
       >
         <img
           className="h-12 w-12 bg-white rounded-full border"
-          alt="..."
-          src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt="avatar"
+          src={data.avatarUrl}
         ></img>
-        <span className="ml-3 font-bold text-gray-700 ">{data.userName}</span>
+        <span className="ml-3 font-bold text-gray-700 ">{data.fullName}</span>
       </th>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        Nothing
+        {data.email || 'N/A'} 
       </td>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        {data.accountType}
+        {data.phoneNumber || 'N/A'}
       </td>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        {isLock ? (
+        {data.isLockedOut ? (
           <UnlockDialog id={data.id} setunlock={setLock}></UnlockDialog>
         ) : (
           <LockDialog id={data.id} setlock={(countdown) =>handlesetLock(countdown)}></LockDialog>

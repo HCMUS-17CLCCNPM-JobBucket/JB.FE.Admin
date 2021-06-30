@@ -5,22 +5,21 @@ import Items from "./Items";
 import Pagination from "../Pagination";
 export default function CardTable() {
   const [user, setUser] = useState([]);
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(0);
-  const [lockFilter, setLockFilter] = useState('<=');
+  const [isLockout, setisLockout] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
-      const date = new Date();
-      await Axios.post(
+      const res = await Axios.post(
         "http://128.199.64.229:5008/api/user/listUser",
         {
           page: currentPage - 1,
           filters: [
             {
-              property: "birthDate",
-              value: date.toISOString(),
-              comparison: lockFilter,
+              property: "isLockedOut",
+              value: isLockout,
+              comparison: "==",
             },
           ],
         },
@@ -28,24 +27,21 @@ export default function CardTable() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwMzgxOTAsImV4cCI6MTYyNTA0NTM5MCwiaWF0IjoxNjI1MDM4MTkwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.e84tU0nPQ-hRPpOFIY3Iyo9yw0SgLB0n0z1xzwk9DaQ",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwNjUxODgsImV4cCI6MTYyNTA3MjM4OCwiaWF0IjoxNjI1MDY1MTg4LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.U_rbXm2yNjhEQySLz0HhSV1f2iwnhOBNqGw5ZH22tm0",
           },
         }
-      )
-        .then((res) => {
-          setUser(res.data.data);
-        })
-        .catch((error) => {
-          alert(error);
-        });
-      await Axios.post(
+      );
+      if (res.status === 200) {
+        setUser(res.data.data);
+      }
+      const res1 = await Axios.post(
         "http://128.199.64.229:5008/api/user/count",
         {
           filters: [
             {
-              property: "birthDate",
-              value: date.toISOString(),
-              comparison: lockFilter,
+              property: "isLockedOut",
+              value: isLockout,
+              comparison: "==",
             },
           ],
         },
@@ -53,19 +49,16 @@ export default function CardTable() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwMzgxOTAsImV4cCI6MTYyNTA0NTM5MCwiaWF0IjoxNjI1MDM4MTkwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.e84tU0nPQ-hRPpOFIY3Iyo9yw0SgLB0n0z1xzwk9DaQ",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwNjUxODgsImV4cCI6MTYyNTA3MjM4OCwiaWF0IjoxNjI1MDY1MTg4LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.U_rbXm2yNjhEQySLz0HhSV1f2iwnhOBNqGw5ZH22tm0",
           },
         }
-      )
-        .then((res) => {
-          setLength(res.data.data);
-        })
-        .catch((error) => {
-          alert(error);
-        });
+      );
+      if (res1.status === 200) {
+        setLength(res1.data.data);
+      }
     }
     fetchdata();
-  }, [currentPage, lockFilter]);
+  }, [currentPage, isLockout]);
 
   return (
     <>
@@ -74,8 +67,32 @@ export default function CardTable() {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
               <h6 className="text-gray-800 text-xl font-bold">Users List</h6>
+              {isLockout ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setisLockout(false);
+                    setCurrentPage(1);
+                  }}
+                  className="my-4 h-10 px-4 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:outline-none hover:bg-red-600"
+                >
+                  <i className="bx bxs-lock bx-xs mr-2"></i>
+                  LOCKED USERS
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setisLockout(true);
+                    setCurrentPage(1);
+                  }}
+                  className="my-4 h-10 px-4 text-white transition-colors duration-150 bg-green-500 rounded-lg focus:outline-none hover:bg-green-600"
+                >
+                  <i className="bx bxs-lock bx-xs mr-2"></i>
+                  NONLOCKED USERS
+                </button>
+              )}
             </div>
-            {lockFilter =='<=' ? <button onClick={()=>setLockFilter('>=')}>all</button>: <button onClick={()=>setLockFilter('<=')}>nothing</button>}
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
@@ -84,19 +101,16 @@ export default function CardTable() {
             <thead>
               <tr>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  #
+                  Full Name
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Name
+                  Email
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Date Create
+                  Phone Number
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  BirthDay
-                </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Action
+                  Lock Status
                 </th>
               </tr>
             </thead>
@@ -107,13 +121,15 @@ export default function CardTable() {
             </tbody>
           </table>
           <hr></hr>
-          {length !== 0 && (
-            <Pagination
-              pages={length}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
-          )}
+          <div className="my-4">
+            {length != 0 && (
+              <Pagination
+                pages={length}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

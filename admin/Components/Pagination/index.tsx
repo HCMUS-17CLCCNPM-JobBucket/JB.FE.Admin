@@ -66,7 +66,7 @@ function Pagination({ pages, currentPage, setCurrentPage }) {
       <p
         className={`${
           currentPage > 1
-            ? "cursor-pointer text-gray-700 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white dark:hover:text-gray-200"
+            ? "cursor-pointer text-gray-700 hover:bg-gray-600 dark:hover:bg-indigo-500 hover:text-white dark:hover:text-gray-200"
             : "cursor-not-allowed text-gray-500"
         } flex items-center px-4 py-2 mx-1  bg-white rounded-md dark:bg-gray-800 dark:text-gray-600 transition-colors duration-200 transform`}
         onClick={() =>
@@ -89,7 +89,7 @@ function Pagination({ pages, currentPage, setCurrentPage }) {
       <a
         className={`${
           currentPage < n
-            ? "cursor-pointer text-gray-700 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white dark:hover:text-gray-200"
+            ? "cursor-pointer text-gray-700 hover:bg-gray-600 dark:hover:bg-indigo-500 hover:text-white dark:hover:text-gray-200"
             : "cursor-not-allowed text-gray-500"
         } flex items-center px-4 py-2 mx-1  bg-white rounded-md dark:bg-gray-800 dark:text-gray-600 transition-colors duration-200 transform`}
         onClick={() =>

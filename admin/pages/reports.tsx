@@ -32,7 +32,6 @@ export default function Reports() {
       )
         .then((res) => {
           setReports(res.data.data);
-          console.log(reports)
         })
         .catch((error) => {
           alert(error);

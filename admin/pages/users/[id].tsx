@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Layout from "../../Components/Layout";
+import Link from "next/link";
 
-export const getServerSideProps = async ({params}) => {
+export const getServerSideProps = async ({ params }) => {
   const id = params.id;
   return {
-     props: { id }
-  }
-}
+    props: { id },
+  };
+};
 
 export default function UserInfo(props) {
-
   const id = props.id;
 
   const [user, setUser] = useState({
@@ -33,13 +33,16 @@ export default function UserInfo(props) {
 
   useEffect(() => {
     async function fetchdata() {
-      await Axios.get("http://128.199.249.40:5008/api/user/" + id + "/details", {
-        headers: {
-          Authorization:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwMzgxOTAsImV4cCI6MTYyNTA0NTM5MCwiaWF0IjoxNjI1MDM4MTkwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.e84tU0nPQ-hRPpOFIY3Iyo9yw0SgLB0n0z1xzwk9DaQ",
-        },
-      })
+      await Axios.get(
+        "http://128.199.249.40:5008/api/user/" + id + "/details",
+        {
+          headers: {
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwMzgxOTAsImV4cCI6MTYyNTA0NTM5MCwiaWF0IjoxNjI1MDM4MTkwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.e84tU0nPQ-hRPpOFIY3Iyo9yw0SgLB0n0z1xzwk9DaQ",
+          },
+        }
+      )
         .then((res) => {
           setUser(res.data.data);
         })
@@ -52,9 +55,12 @@ export default function UserInfo(props) {
   return (
     <div className="pt-4 md:pt-32">
       <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-white border-0">
-        <div className="rounded-t bg-white mb-0 px-6 py-6">
-          <div className="text-center flex justify-between">
-            <h6 className="text-gray-800 text-xl font-bold">User Account</h6>
+        <div className="rounded-t bg-white mb-0 px-10 py-6">
+          <div className="text-center flex">
+            <Link href="/">
+              <i className="bx bx-arrow-back bx-sm mr-2 cursor-pointer"></i>
+            </Link>
+            <h6 className="text-gray-800 text-xl font-bold">User List</h6>
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0 ">
@@ -68,9 +74,9 @@ export default function UserInfo(props) {
                   className="block uppercase text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Username
+                  Full Name
                 </label>
-                <label className="py-3">{user.userName}</label>
+                <label className="py-3">{user.fullName || "N/A"}</label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -81,7 +87,7 @@ export default function UserInfo(props) {
                 >
                   Email address
                 </label>
-                <label className="py-3">{user.email}</label>
+                <label className="py-3">{user.email || "N/A"}</label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -90,9 +96,9 @@ export default function UserInfo(props) {
                   className="block uppercase text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  First Name
+                  Birth Date
                 </label>
-                <label className="py-3">{user.birthDate == null? 'nothing' : user.birthDate}</label>
+                <label className="py-3">{user.birthDate || "N/A"}</label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -101,9 +107,9 @@ export default function UserInfo(props) {
                   className="block uppercase text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Last Name
+                  Create Date
                 </label>
-                <label className="py-3">Tuan</label>
+                <label className="py-3">{user.createdDate || "N/A"}</label>
               </div>
             </div>
           </div>

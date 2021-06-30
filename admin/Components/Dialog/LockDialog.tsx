@@ -58,9 +58,10 @@ export default function MyModal(props) {
       <button
         type="button"
         onClick={openModal}
-        className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        className="h-10 px-10 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:outline-none hover:bg-red-600"
       >
-        Lock
+        <i className='bx bxs-lock bx-xs mr-2' ></i>
+        LOCK
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
