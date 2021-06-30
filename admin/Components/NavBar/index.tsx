@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import DropDown from "../DropDown/userDropDown";
+import DropDown from "../DropDown";
 
 interface Props {}
 

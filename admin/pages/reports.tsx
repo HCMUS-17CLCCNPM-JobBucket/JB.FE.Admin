@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import Index from "./index";
+import Layout from "../Components/Layout";
 import Expanded from "../Components/Expand";
 import Axios from "axios";
 
 export default function Reports() {
-  const [resolveFilter, setFilter] = useState(true);
+  const [resolveFilter, setFilter] = useState(false);
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
@@ -24,12 +24,13 @@ export default function Reports() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjQ4OTgzODgsImV4cCI6MTYyNDkwNTU4OCwiaWF0IjoxNjI0ODk4Mzg4LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.QpnW2cShAL_1_zU578XQ-XdpCTHKrX94ur3Nvf-etxY",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwMzgxOTAsImV4cCI6MTYyNTA0NTM5MCwiaWF0IjoxNjI1MDM4MTkwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.e84tU0nPQ-hRPpOFIY3Iyo9yw0SgLB0n0z1xzwk9DaQ",
           },
         }
       )
         .then((res) => {
           setReports(res.data.data);
+          console.log(reports)
         })
         .catch((error) => {
           alert(error);
@@ -56,4 +57,4 @@ export default function Reports() {
   );
 }
 
-Reports.layout = Index;
+Reports.layout = Layout;

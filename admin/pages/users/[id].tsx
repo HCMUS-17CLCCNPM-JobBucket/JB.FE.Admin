@@ -1,8 +1,6 @@
-import {useRouter} from "next/router";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import Index from "../index";
-import { User } from "../../interface/user";
+import Layout from "../../Components/Layout";
 
 export const getServerSideProps = async ({params}) => {
   const id = params.id;
@@ -15,7 +13,7 @@ export default function UserInfo(props) {
 
   const id = props.id;
 
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState({
     accountType: 1,
     id: "",
     email: "",
@@ -39,14 +37,14 @@ export default function UserInfo(props) {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjI1NDMzNDQsImV4cCI6MTYyMjU1MDU0NCwiaWF0IjoxNjIyNTQzMzQ0LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.fzIYS4UatgVx1HAj3LPgL0HDX89chnOZ067JEz6sFmI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwMzgxOTAsImV4cCI6MTYyNTA0NTM5MCwiaWF0IjoxNjI1MDM4MTkwLCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.e84tU0nPQ-hRPpOFIY3Iyo9yw0SgLB0n0z1xzwk9DaQ",
         },
       })
         .then((res) => {
           setUser(res.data.data);
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
     }
     fetchdata();
@@ -167,4 +165,4 @@ export default function UserInfo(props) {
   );
 }
 
-UserInfo.layout = Index;
+UserInfo.layout = Layout;

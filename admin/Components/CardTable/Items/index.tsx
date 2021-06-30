@@ -18,7 +18,6 @@ export default function index({ data }) {
   useEffect(() => {
     if (isLock) {
       let countdown = Date.parse(data.lockoutEnd) - Date.now();
-      console.log(countdown);
       setTimeout(() => {
         setLock(false);
       }, countdown);

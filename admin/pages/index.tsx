@@ -1,19 +1,16 @@
-import SideBar from "../Components/SideBar/sideBar";
-import NavBar from "../Components/NavBar/navBar";
-import Footer from "../Components/Footer/Footer";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Tables from "../Components/CardTable";
+import Layout from "../Components/Layout";
 
-export default function Home({ children }) {
+
+export default function UsersTable() {
   return (
     <>
-      <SideBar />
-      <div className="relative md:ml-64">
-        <NavBar />
-        <div className="px:0 md:px-12 mx-auto w-full flex flex-col bg-gray-200 min-h-screen">
-          <div className="flex-grow">{children}</div>
-          <Footer></Footer>
-        </div>
+      <div className="pt-4 md:pt-32">
+        <Tables />
       </div>
     </>
   );
 }
+
+UsersTable.layout = Layout;

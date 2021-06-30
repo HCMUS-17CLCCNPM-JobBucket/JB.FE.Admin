@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import DropDown from "../DropDown/userDropDown";
+import DropDown from "../DropDown";
 
 interface Props {}
 
@@ -75,12 +75,12 @@ export default function sideBar({}: Props): ReactElement {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link href="/users">
+                <Link href="/">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/users") !== -1
+                      (router.pathname.indexOf("/users") !== -1 || router.pathname == ('/')
                         ? "text-blue-500 hover:text-blue-600"
                         : "text-gray-800 hover:text-gray-600")
                     }
@@ -88,7 +88,7 @@ export default function sideBar({}: Props): ReactElement {
                     <i
                       className={
                         "bx bxs-user mr-2 text-sm " +
-                        (router.pathname.indexOf("/users") !== -1
+                        (router.pathname.indexOf("/users") !== -1 || router.pathname == ('/')
                           ? "opacity-75"
                           : "text-gray-400")
                       }

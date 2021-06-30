@@ -45,14 +45,12 @@ export default function MyModal(props) {
       .then((res) => {
         if (res.status == 200) {
           alert("lock success");
-          console.log(date.getTime() - Date.now());
           props.setlock(date.getTime() - Date.now());
         }
       })
       .catch((error) => {
         alert(error);
       });
-    console.log(props.id, duaration, date.toISOString());
   }
 
   return (
