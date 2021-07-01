@@ -2,11 +2,13 @@ import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "../Components/Layout";
 import Expanded from "../Components/Expand";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function Reports() {
   const [resolveFilter, setFilter] = useState(false);
   const [reports, setReports] = useState([]);
   const [resoveSuccess, setResolve] = useState(false);
+  const token = useSelector((state: any) => state.user.token);
 
   useEffect(() => {
     async function fetchdata() {
@@ -26,7 +28,7 @@ export default function Reports() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwNDcxNTUsImV4cCI6MTYyNTA1NDM1NSwiaWF0IjoxNjI1MDQ3MTU1LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.cyPBm-k8UMZhE7dB7wrRcQuWjQcquBHkB5SLldZKM78",
+              token,
           },
         }
       )

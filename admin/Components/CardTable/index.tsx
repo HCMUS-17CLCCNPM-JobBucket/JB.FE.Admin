@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import Axios from "axios";
 import Items from "./Items";
 import Pagination from "../Pagination";
+import { useSelector } from "react-redux";
 export default function CardTable() {
+  const token = useSelector((state: any) => state.user.token);
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(0);
@@ -27,7 +29,7 @@ export default function CardTable() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwNjUxODgsImV4cCI6MTYyNTA3MjM4OCwiaWF0IjoxNjI1MDY1MTg4LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.U_rbXm2yNjhEQySLz0HhSV1f2iwnhOBNqGw5ZH22tm0",
+              token,
           },
         }
       );
@@ -49,7 +51,7 @@ export default function CardTable() {
           headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjUwNjUxODgsImV4cCI6MTYyNTA3MjM4OCwiaWF0IjoxNjI1MDY1MTg4LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.U_rbXm2yNjhEQySLz0HhSV1f2iwnhOBNqGw5ZH22tm0",
+              token,
           },
         }
       );

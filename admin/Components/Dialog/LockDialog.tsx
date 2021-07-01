@@ -2,10 +2,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Axios from "axios";
 import { parse } from "node:path";
+import { useSelector } from "react-redux";
 
 export default function MyModal(props) {
   // add a day
   const [isOpen, setIsOpen] = useState(false);
+  const token = useSelector((state: any) => state.user.token);
   const [lockList, setLockList] = useState([
     { name: "7 days", value: 7 },
     { name: "1 months", value: 30 },
@@ -38,7 +40,7 @@ export default function MyModal(props) {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjpbIkd1ZXN0IiwiVXNlciIsIkVtcGxveWVyIiwiQ3VzdG9tZXJDYXJlIiwiQWRtaW4iXSwiZW1haWwiOiJqYmFkbWluQGpvYmJ1Y2tldC5sb2NhbCIsIm5hbWVpZCI6IjEiLCJuYmYiOjE2MjI1NDMzNDQsImV4cCI6MTYyMjU1MDU0NCwiaWF0IjoxNjIyNTQzMzQ0LCJpc3MiOiJqb2JidWNrZXQuY29tIiwiYXVkIjoiam9iYnVja2V0LmNvbSJ9.fzIYS4UatgVx1HAj3LPgL0HDX89chnOZ067JEz6sFmI",
+            token,
         },
       }
     )

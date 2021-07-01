@@ -80,7 +80,7 @@ export default function sideBar({}: Props): ReactElement {
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/users") !== -1 || router.pathname == ('/')
+                      (router.pathname.indexOf("/users") !== -1
                         ? "text-blue-500 hover:text-blue-600"
                         : "text-gray-800 hover:text-gray-600")
                     }
@@ -88,7 +88,7 @@ export default function sideBar({}: Props): ReactElement {
                     <i
                       className={
                         "bx bxs-user mr-2 text-sm " +
-                        (router.pathname.indexOf("/users") !== -1 || router.pathname == ('/')
+                        (router.pathname.indexOf("/users") !== -1 
                           ? "opacity-75"
                           : "text-gray-400")
                       }

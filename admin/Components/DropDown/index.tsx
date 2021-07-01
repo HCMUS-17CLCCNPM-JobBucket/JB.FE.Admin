@@ -1,9 +1,18 @@
 import React, { ReactElement } from "react";
 import Popper from "popper.js";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/user";
+import router from "next/router";
 
 interface Props {}
 
 export default function userDropDown({}: Props): ReactElement {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    localStorage.removeItem("jobbucket");
+    dispatch(userActions.logout());
+    router.push("/");
+  };
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef<HTMLAnchorElement>();
@@ -51,7 +60,7 @@ export default function userDropDown({}: Props): ReactElement {
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent "
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={handleLogout}
         >
           Logout
         </a>
