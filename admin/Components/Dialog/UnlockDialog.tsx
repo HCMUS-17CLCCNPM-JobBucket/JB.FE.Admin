@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 export default function MyModal(props) {
   let [isOpen, setIsOpen] = useState(false);
-  const token = useSelector((state: any) => state.user.token);
+  const user = useSelector((state: any) => state.user);
 
   function closeModal() {
     setIsOpen(false);
@@ -18,20 +18,20 @@ export default function MyModal(props) {
 
   async function UnlockUser() {
     await Axios.put(
-      "http://128.199.249.40:5008/api/user/" + props.id + "/unlock",
+      "http://128.199.64.229:5008/api/user/" + props.id + "/unlock",
       {},
       {
         headers: {
           Authorization:
             "Bearer " +
-            token,
+            user.token,
         },
       }
     )
       .then((res) => {
         if ((res.status = 200)) {
-          alert("unlock success");
-          props.setunlock(false);
+          props.unlocksuccess(true);
+          setIsOpen(false);
         }
       })
       .catch((error) => {

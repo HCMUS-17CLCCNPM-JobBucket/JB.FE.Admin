@@ -13,35 +13,17 @@ export const getServerSideProps = async ({ params }) => {
 
 export default function UserInfo(props) {
   const id = props.id;
-  const token = useSelector((state: any) => state.user.token);
+  const users = useSelector((state: any) => state.user);
 
-  const [user, setUser] = useState({
-    accountType: 1,
-    id: "",
-    email: "",
-    userName: "",
-    phoneNumber: "",
-    phoneNumberConfirmedL: "",
-    birthDate: null,
-    createdDate: null,
-    addressLine: [],
-    city: "",
-    country: "",
-    avatarUrl: "",
-    lockoutEnabled: true,
-    fullName: "",
-    lockoutEnd: "",
-  });
+  const [user, setUser] = useState<any>({});
 
   useEffect(() => {
     async function fetchdata() {
       await Axios.get(
-        "http://128.199.249.40:5008/api/user/" + id + "/details",
+        "http://128.199.64.229:5008/api/user/" + id + "/details",
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              token,
+            Authorization: "Bearer " + users.token,
           },
         }
       )
@@ -59,8 +41,8 @@ export default function UserInfo(props) {
       <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-white border-0">
         <div className="rounded-t bg-white mb-0 px-10 py-6">
           <div className="text-center flex">
-            <Link href="/">
-              <i className="bx bx-arrow-back bx-sm mr-2 cursor-pointer"></i>
+            <Link href="/users">
+              <i className="bx bx-chevron-left bx-sm mr-2 cursor-pointer"></i>
             </Link>
             <h6 className="text-gray-800 text-xl font-bold">User List</h6>
           </div>

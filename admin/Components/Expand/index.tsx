@@ -2,11 +2,10 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
-
-
+import user from "../../redux/user";
 
 export default function Expanded(props) {
-  const token = useSelector((state: any) => state.user.token);
+  const user = useSelector((state: any) => state.user);
 
   async function onResolveReport() {
     await Axios.put(
@@ -14,9 +13,7 @@ export default function Expanded(props) {
       {},
       {
         headers: {
-          Authorization:
-            "Bearer " +
-            token,
+          Authorization: "Bearer " + user.token,
         },
       }
     )
@@ -31,7 +28,6 @@ export default function Expanded(props) {
       });
   }
 
-
   return (
     <div className="w-full p-2 mx-auto bg-white">
       <Disclosure>
@@ -39,17 +35,36 @@ export default function Expanded(props) {
           <>
             <Disclosure.Button
               className={`
-                  flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-purple-900 rounded-lg focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
-                  ${props.isResolved ? "bg-purple-100" : "bg-red-500"}`}
+                  flex justify-between w-full px-4 py-2 text-sm font-medium text-left rounded-lg focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
+                  ${
+                    props.isResolved
+                      ? "bg-green-500 text-black"
+                      : "bg-red-500 text-white"
+                  }`}
             >
-              <div>
-                <p>{props.fullName}</p>
+              <div className="flex">
+                <img
+                  className="h-10 w-10 bg-white rounded-full border mr-2"
+                  alt="avatar"
+                  src={props.user.avatarUrl}
+                ></img>
+                <div>
+                <p>{props.user.fullName}</p>
+                <p>{props.user.email}</p>
+                </div>
               </div>
-              {
-                props.isResolved ? <p>done</p> : <a className="button" onClick={onResolveReport}>Resolve</a>
-              }
+              {props.isResolved ? (
+                <i className="bx bx-check bx-xs mr-2"></i>
+              ) : (
+                <a
+                  className="button border-b-2 text-white"
+                  onClick={onResolveReport}
+                >
+                  <i className="bx bxs-edit bx-xs"></i>Resolve
+                </a>
+              )}
             </Disclosure.Button>
-            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black">
               {props.content}
             </Disclosure.Panel>
           </>

@@ -75,7 +75,7 @@ export default function sideBar({}: Props): ReactElement {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link href="/">
+                <Link href="/users">
                   <a
                     href="#pablo"
                     className={

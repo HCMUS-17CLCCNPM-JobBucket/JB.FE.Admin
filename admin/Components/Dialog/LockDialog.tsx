@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 export default function MyModal(props) {
   // add a day
   const [isOpen, setIsOpen] = useState(false);
-  const token = useSelector((state: any) => state.user.token);
+  const user = useSelector((state: any) => state.user);
   const [lockList, setLockList] = useState([
     { name: "7 days", value: 7 },
     { name: "1 months", value: 30 },
@@ -34,20 +34,20 @@ export default function MyModal(props) {
     date.setDate(date.getDate() + parseInt(duaration));
 
     await Axios.put(
-      "http://128.199.249.40:5008/api/user/" + props.id + "/lock",
+      "http://128.199.64.229:5008/api/user/" + props.id + "/lock",
       { lockUntil: date.toISOString() },
       {
         headers: {
           Authorization:
             "Bearer " +
-            token,
+            user.token,
         },
       }
     )
       .then((res) => {
         if (res.status == 200) {
-          alert("lock success");
-          props.setlock(date.getTime() - Date.now());
+          props.locksuccess(true);
+          setIsOpen(false);
         }
       })
       .catch((error) => {
@@ -129,7 +129,7 @@ export default function MyModal(props) {
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={onLockUser}
                   >
-                    Lock {props.id}
+                    Lock
                   </button>
                   <button
                     type="button"

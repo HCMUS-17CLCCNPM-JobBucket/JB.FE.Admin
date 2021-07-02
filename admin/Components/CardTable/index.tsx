@@ -5,14 +5,16 @@ import Items from "./Items";
 import Pagination from "../Pagination";
 import { useSelector } from "react-redux";
 export default function CardTable() {
-  const token = useSelector((state: any) => state.user.token);
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(0);
   const [isLockout, setisLockout] = useState(false);
+  const users = useSelector((state: any) => state.user);
+  const [changeFilter,setChangeFilter] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
+      setChangeFilter(false)
       const res = await Axios.post(
         "http://128.199.64.229:5008/api/user/listUser",
         {
@@ -27,9 +29,7 @@ export default function CardTable() {
         },
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              token,
+            Authorization: "Bearer " + users.token,
           },
         }
       );
@@ -49,9 +49,7 @@ export default function CardTable() {
         },
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              token,
+            Authorization: "Bearer " + users.token,
           },
         }
       );
@@ -60,7 +58,7 @@ export default function CardTable() {
       }
     }
     fetchdata();
-  }, [currentPage, isLockout]);
+  }, [currentPage, isLockout, changeFilter]);
 
   return (
     <>
@@ -118,18 +116,22 @@ export default function CardTable() {
             </thead>
             <tbody>
               {user.map((data, key) => (
-                <Items data={data} key={key}></Items>
+                <Items data={data} key={key} setActionSuccess={setChangeFilter}></Items>
               ))}
             </tbody>
           </table>
           <hr></hr>
           <div className="my-4">
-            {length != 0 && (
+            {length != 0 ? (
               <Pagination
                 pages={length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
               />
+            ) : (
+              <div className="text-center">
+                <p>Empty</p>
+              </div>
             )}
           </div>
         </div>

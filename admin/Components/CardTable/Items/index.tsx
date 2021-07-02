@@ -3,23 +3,13 @@ import router from "next/router";
 import LockDialog from "../../Dialog/LockDialog";
 import UnlockDialog from "../../Dialog/UnlockDialog";
 
-export default function index({ data }) {
-  const [isLock, setLock] = useState(
-    Date.parse(data.lockoutEnd) - Date.now() > 0
-  );
-
-  const handlesetLock = (countdown) =>{
-    setLock(true)
-    setTimeout(() => {
-      setLock(false);
-    }, countdown);
-  }
+export default function index({ data, setActionSuccess }) {
 
   useEffect(() => {
     if (data.isLockedOut) {
       let countdown = Date.parse(data.lockoutEnd) - Date.now();
       setTimeout(() => {
-        setLock(false);
+        setActionSuccess(true);
       }, countdown);
     }
   }, []);
@@ -38,19 +28,18 @@ export default function index({ data }) {
         <span className="ml-3 font-bold text-gray-700 ">{data.fullName}</span>
       </th>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        {data.email || 'N/A'} 
+        {data.email || "N/A"}
       </td>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        {data.phoneNumber || 'N/A'}
+        {data.phoneNumber || "N/A"}
       </td>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
         {data.isLockedOut ? (
-          <UnlockDialog id={data.id} setunlock={setLock}></UnlockDialog>
+          <UnlockDialog id={data.id}  unlocksuccess={setActionSuccess}></UnlockDialog>
         ) : (
-          <LockDialog id={data.id} setlock={(countdown) =>handlesetLock(countdown)}></LockDialog>
+          <LockDialog id={data.id} locksuccess = {setActionSuccess} ></LockDialog>
         )}
       </td>
     </tr>
   );
 }
-
