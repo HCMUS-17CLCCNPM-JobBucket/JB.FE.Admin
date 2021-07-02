@@ -30,8 +30,10 @@ export default function LoginScreen() {
       })
         .then((res) => {
           if (res.status == 200) {
+            console.log(res.data.data.user.avatarUrl)
             const payload = {
               token: res.data.data.token,
+              avatarUrl: res.data.data.user.avatarUrl,
             };
             dispatch(userActions.login(payload));
             router.push("/users");

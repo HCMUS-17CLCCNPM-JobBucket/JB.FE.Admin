@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Layout from "../../Components/Layout";
-import Link from "next/link";
 import { useSelector } from "react-redux";
+import router from "next/router";
 
 export const getServerSideProps = async ({ params }) => {
   const id = params.id;
@@ -41,9 +41,9 @@ export default function UserInfo(props) {
       <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-white border-0">
         <div className="rounded-t bg-white mb-0 px-10 py-6">
           <div className="text-center flex">
-            <Link href="/users">
+            <button onClick={() => router.back()}>
               <i className="bx bx-chevron-left bx-sm mr-2 cursor-pointer"></i>
-            </Link>
+            </button>
             <h6 className="text-gray-800 text-xl font-bold">User List</h6>
           </div>
         </div>
@@ -82,7 +82,9 @@ export default function UserInfo(props) {
                 >
                   Birth Date
                 </label>
-                <label className="py-3">{user.birthDate || "N/A"}</label>
+                <label className="py-3">
+                  {user.birthDate ? user.birthDate.substr(0, 10) : "N/A"}
+                </label>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -93,9 +95,29 @@ export default function UserInfo(props) {
                 >
                   Create Date
                 </label>
-                <label className="py-3">{user.createdDate || "N/A"}</label>
+                <label className="py-3">
+                  {user.createdDate ? user.createdDate.substr(0, 10) : "N/A"}
+                </label>
               </div>
             </div>
+            {
+            console.log(user.isLockedOut, user.fullName)/* {user.isLockedOut ? (
+              <div className="w-full lg:w-6/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Lock out end
+                  </label>
+                  <label className="py-3">
+                    {user.lockoutEnd.substr(0, 10) || "N/A"}
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <> </>
+            )} */}
           </div>
 
           <hr className="mt-6 border-b-1 border-gray-400" />
@@ -104,7 +126,7 @@ export default function UserInfo(props) {
             Contact Information
           </h6>
           <div className="flex flex-wrap">
-            <div className="w-full lg:w-12/12 px-4">
+            <div className="w-full lg:w-6/12 px-4">
               <div className="relative w-full mb-3">
                 <label
                   className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -112,40 +134,18 @@ export default function UserInfo(props) {
                 >
                   Address
                 </label>
-                <label className="py-3">123 Nguyen Van Cu</label>
+                <label className="py-3">N/A</label>
               </div>
             </div>
-            <div className="w-full lg:w-4/12 px-4">
+            <div className="w-full lg:w-6/12 px-4">
               <div className="relative w-full mb-3">
                 <label
                   className="block uppercase text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  City
+                  Phone number
                 </label>
-                <label className="py-3">HCM</label>
-              </div>
-            </div>
-            <div className="w-full lg:w-4/12 px-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Country
-                </label>
-                <label className="py-3">VietNam</label>
-              </div>
-            </div>
-            <div className="w-full lg:w-4/12 px-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Postal Code
-                </label>
-                <label className="py-3">70000</label>
+                <label className="py-3">{user.phoneNumber || "N/A"}</label>
               </div>
             </div>
           </div>

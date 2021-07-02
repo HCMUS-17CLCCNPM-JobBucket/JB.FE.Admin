@@ -94,7 +94,7 @@ export default function MyModal(props) {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Do you want to unlock this user {props.id}?
+                    Do you want to unlock {props.fullname}?
                   </p>
                 </div>
 

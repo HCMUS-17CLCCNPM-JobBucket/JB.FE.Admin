@@ -4,7 +4,6 @@ import LockDialog from "../../Dialog/LockDialog";
 import UnlockDialog from "../../Dialog/UnlockDialog";
 
 export default function index({ data, setActionSuccess }) {
-
   useEffect(() => {
     if (data.isLockedOut) {
       let countdown = Date.parse(data.lockoutEnd) - Date.now();
@@ -15,11 +14,11 @@ export default function index({ data, setActionSuccess }) {
   }, []);
 
   return (
-    <tr className="cursor-pointer">
-      <th
-        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center"
-        onClick={() => router.push("/users/" + data.id)}
-      >
+    <tr
+      className="cursor-pointer"
+      onClick={() => router.push("/users/" + data.id)}
+    >
+      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center">
         <img
           className="h-12 w-12 bg-white rounded-full border"
           alt="avatar"
@@ -35,9 +34,17 @@ export default function index({ data, setActionSuccess }) {
       </td>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
         {data.isLockedOut ? (
-          <UnlockDialog id={data.id}  unlocksuccess={setActionSuccess}></UnlockDialog>
+          <UnlockDialog
+            id={data.id}
+            fullname={data.fullName}
+            unlocksuccess={setActionSuccess}
+          ></UnlockDialog>
         ) : (
-          <LockDialog id={data.id} locksuccess = {setActionSuccess} ></LockDialog>
+          <LockDialog
+            id={data.id}
+            fullname={data.fullName}
+            locksuccess={setActionSuccess}
+          ></LockDialog>
         )}
       </td>
     </tr>

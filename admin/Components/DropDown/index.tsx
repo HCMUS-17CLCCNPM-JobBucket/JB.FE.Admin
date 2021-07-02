@@ -3,11 +3,13 @@ import Popper from "popper.js";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../redux/user";
 import router from "next/router";
-
+import { useSelector } from "react-redux";
 interface Props {}
 
 export default function userDropDown({}: Props): ReactElement {
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
+  console.log(user.avatarUrl)
   const handleLogout = () => {
     localStorage.removeItem("jobbucket");
     dispatch(userActions.logout());
@@ -40,8 +42,8 @@ export default function userDropDown({}: Props): ReactElement {
         <div className="items-center flex">
           <span className="w-12 h-12 text-sm text-white bg-gray-300 inline-flex items-center justify-center rounded-full">
             <img
-              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt="..."
+              src={user.avatarUrl}
+              alt="admin"
               className="w-full rounded-full align-middle border-none shadow-lg"
             />
           </span>
