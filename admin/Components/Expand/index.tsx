@@ -9,7 +9,7 @@ export default function Expanded(props) {
 
   async function onResolveReport() {
     await Axios.put(
-      "http://128.199.64.229:5008/api/report/" + props.id + "/resolve",
+      process.env.BASE_URL +"/report/" + props.id + "/resolve",
       {},
       {
         headers: {
@@ -38,7 +38,7 @@ export default function Expanded(props) {
                   flex justify-between w-full px-4 py-2 text-sm font-medium text-left rounded-lg focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
                   ${
                     props.isResolved
-                      ? "bg-green-500 text-black"
+                      ? "bg-green-500 text-white"
                       : "bg-red-500 text-white"
                   }`}
             >
@@ -64,7 +64,7 @@ export default function Expanded(props) {
                 </a>
               )}
             </Disclosure.Button>
-            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black">
+            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-white">
               {props.content}
             </Disclosure.Panel>
           </>

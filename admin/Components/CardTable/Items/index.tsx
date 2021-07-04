@@ -14,11 +14,11 @@ export default function index({ data, setActionSuccess }) {
   }, []);
 
   return (
-    <tr
-      className="cursor-pointer"
-      onClick={() => router.push("/users/" + data.id)}
-    >
-      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center">
+    <tr>
+      <th
+        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center cursor-pointer"
+        onClick={() => router.push("/users/" + data.id)}
+      >
         <img
           className="h-12 w-12 bg-white rounded-full border"
           alt="avatar"

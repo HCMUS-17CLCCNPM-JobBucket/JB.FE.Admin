@@ -1,22 +1,27 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import router from "next/router";
 import Axios from "axios";
 import Items from "./Items";
 import Pagination from "../Pagination";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { filterActions } from "../../redux/filter";
+import { userActions } from "../../redux/user";
 export default function CardTable() {
+  const dispatch = useDispatch();
+  const users = useSelector((state: any) => state.user);
+  const filter = useSelector((state: any) => state.filter);
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(0);
-  const [isLockout, setisLockout] = useState(false);
-  const users = useSelector((state: any) => state.user);
-  const [changeFilter,setChangeFilter] = useState(false);
+  const [isLockout, setisLockout] = useState(filter.locked_fliter);
+  const [changeFilter, setChangeFilter] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
-      setChangeFilter(false)
+      setChangeFilter(false);
       const res = await Axios.post(
-        "http://128.199.64.229:5008/api/user/listUser",
+        process.env.BASE_URL +"/user/listUser",
         {
           page: currentPage - 1,
           filters: [
@@ -36,8 +41,12 @@ export default function CardTable() {
       if (res.status === 200) {
         setUser(res.data.data);
       }
+      // if (res.status === 401) {
+      //   dispatch(userActions.logout());
+      //   router.push("/");
+      // }
       const res1 = await Axios.post(
-        "http://128.199.64.229:5008/api/user/count",
+        process.env.BASE_URL +"/user/count",
         {
           filters: [
             {
@@ -56,6 +65,10 @@ export default function CardTable() {
       if (res1.status === 200) {
         setLength(res1.data.data);
       }
+      // if (res.status === 401) {
+      //   dispatch(userActions.logout());
+      //   router.push("/");
+      // }
     }
     fetchdata();
   }, [currentPage, isLockout, changeFilter]);
@@ -72,6 +85,7 @@ export default function CardTable() {
                   type="button"
                   onClick={() => {
                     setisLockout(false);
+                    dispatch(filterActions.changeLocked(false));
                     setCurrentPage(1);
                   }}
                   className="my-4 h-10 px-4 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:outline-none hover:bg-red-600"
@@ -84,11 +98,12 @@ export default function CardTable() {
                   type="button"
                   onClick={() => {
                     setisLockout(true);
+                    dispatch(filterActions.changeLocked(true));
                     setCurrentPage(1);
                   }}
                   className="my-4 h-10 px-4 text-white transition-colors duration-150 bg-green-500 rounded-lg focus:outline-none hover:bg-green-600"
                 >
-                  <i className="bx bxs-lock bx-xs mr-2"></i>
+                  <i className="bx bxs-lock-open bx-xs mr-2"></i>
                   NONLOCKED USERS
                 </button>
               )}
@@ -116,7 +131,11 @@ export default function CardTable() {
             </thead>
             <tbody>
               {user.map((data, key) => (
-                <Items data={data} key={key} setActionSuccess={setChangeFilter}></Items>
+                <Items
+                  data={data}
+                  key={key}
+                  setActionSuccess={setChangeFilter}
+                ></Items>
               ))}
             </tbody>
           </table>

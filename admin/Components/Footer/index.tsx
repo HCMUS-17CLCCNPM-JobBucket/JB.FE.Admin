@@ -10,7 +10,6 @@ export default function Footer() {
             <div className="text-sm text-gray-600 font-semibold py-1 text-center md:text-left">
               Copyright © {new Date().getFullYear()}{" "}
               <a
-                href="https://www.creative-tim.com?ref=nnjs-footer-admin"
                 className="text-gray-600 hover:text-gray-800 text-sm font-semibold py-1"
               >
                 JobBucket

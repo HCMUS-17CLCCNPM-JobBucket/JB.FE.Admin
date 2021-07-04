@@ -9,9 +9,8 @@ interface Props {}
 export default function userDropDown({}: Props): ReactElement {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  console.log(user.avatarUrl)
   const handleLogout = () => {
-    localStorage.removeItem("jobbucket");
+    // localStorage.removeItem("jobbucket");
     dispatch(userActions.logout());
     router.push("/");
   };

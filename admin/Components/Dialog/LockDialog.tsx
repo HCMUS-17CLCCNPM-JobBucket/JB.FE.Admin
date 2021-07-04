@@ -34,7 +34,7 @@ export default function MyModal(props) {
     date.setDate(date.getDate() + parseInt(duaration));
 
     await Axios.put(
-      "http://128.199.64.229:5008/api/user/" + props.id + "/lock",
+      process.env.BASE_URL +"/user/" + props.id + "/lock",
       { lockUntil: date.toISOString() },
       {
         headers: {
@@ -126,14 +126,14 @@ export default function MyModal(props) {
                 <div className="mt-4 flex justify-between ">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-400 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={onLockUser}
                   >
                     Lock
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-400 border border-transparent rounded-md hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
                     onClick={closeModal}
                   >
                     Cancel

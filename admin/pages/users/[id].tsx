@@ -14,13 +14,12 @@ export const getServerSideProps = async ({ params }) => {
 export default function UserInfo(props) {
   const id = props.id;
   const users = useSelector((state: any) => state.user);
-
   const [user, setUser] = useState<any>({});
 
   useEffect(() => {
     async function fetchdata() {
       await Axios.get(
-        "http://128.199.64.229:5008/api/user/" + id + "/details",
+        process.env.BASE_URL +"/user/" + id + "/details",
         {
           headers: {
             Authorization: "Bearer " + users.token,
@@ -100,15 +99,14 @@ export default function UserInfo(props) {
                 </label>
               </div>
             </div>
-            {
-            console.log(user.isLockedOut, user.fullName)/* {user.isLockedOut ? (
+            {user.isLockedOut ? (
               <div className="w-full lg:w-6/12 px-4">
                 <div className="relative w-full mb-3">
                   <label
                     className="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Lock out end
+                    Lockout end
                   </label>
                   <label className="py-3">
                     {user.lockoutEnd.substr(0, 10) || "N/A"}
@@ -117,7 +115,7 @@ export default function UserInfo(props) {
               </div>
             ) : (
               <> </>
-            )} */}
+            )}
           </div>
 
           <hr className="mt-6 border-b-1 border-gray-400" />

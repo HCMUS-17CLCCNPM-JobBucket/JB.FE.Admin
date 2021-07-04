@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import Axios from "axios";
 import { userActions } from "../redux/user";
 
+import { filterActions } from "../redux/filter";
+
 export default function LoginScreen() {
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -24,18 +26,18 @@ export default function LoginScreen() {
     }),
 
     onSubmit: async (values) => {
-      await Axios.post("http://128.199.64.229:5008/api/user/Login", {
+      await Axios.post(process.env.BASE_URL +"/user/Login", {
         email: values.username,
         password: values.password,
       })
         .then((res) => {
           if (res.status == 200) {
-            console.log(res.data.data.user.avatarUrl)
             const payload = {
               token: res.data.data.token,
               avatarUrl: res.data.data.user.avatarUrl,
             };
             dispatch(userActions.login(payload));
+            dispatch(filterActions.changeLocked(false))
             router.push("/users");
           }
         })

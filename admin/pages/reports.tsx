@@ -18,7 +18,7 @@ export default function Reports() {
     async function fetchdata() {
       setResolve(false);
       await Axios.post(
-        "http://128.199.64.229:5008/api/report/listReport",
+        process.env.BASE_URL +"/report/listReport",
         {
           page: currentPage - 1,
           filters: [
@@ -42,7 +42,7 @@ export default function Reports() {
           alert(error);
         });
       await Axios.post(
-        "http://128.199.64.229:5008/api/report/count",
+        process.env.BASE_URL +"/report/count",
         {
           filters: [
             {
@@ -79,10 +79,10 @@ export default function Reports() {
                 <button
                   type="button"
                   onClick={() => setFilter(!resolveFilter)}
-                  className="my-4 h-10 px-4 text-black transition-colors duration-150 bg-green-500 rounded-lg focus:outline-none hover:bg-green-600"
+                  className="my-4 h-10 px-4 text-white transition-colors duration-150 bg-green-500 rounded-lg focus:outline-none hover:bg-green-600"
                 >
                   <i className="bx bx-check bx-xs mr-2"></i>
-                  resolved
+                  RESOLVED
                 </button>
               ) : (
                 <button
@@ -91,7 +91,7 @@ export default function Reports() {
                   className="my-4 h-10 px-4 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:outline-none hover:bg-red-600"
                 >
                   <i className="bx bx-x bx-xs mr-2"></i>
-                  Unresolved
+                  UNRESOLVED
                 </button>
               )}
             </div>
