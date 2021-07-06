@@ -57,7 +57,7 @@ export default function Expanded(props) {
                 <i className="bx bx-check bx-xs mr-2"></i>
               ) : (
                 <a
-                  className="button border-b-2 text-white"
+                  className="button border-b-2 text-black"
                   onClick={onResolveReport}
                 >
                   <i className="bx bxs-edit bx-xs"></i>Resolve
