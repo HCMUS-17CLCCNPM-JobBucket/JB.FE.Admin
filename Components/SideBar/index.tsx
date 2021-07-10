@@ -121,6 +121,29 @@ export default function sideBar({}: Props): ReactElement {
                   </a>
                 </Link>
               </li>
+              <li className="items-center">
+                <Link href="/jobs">
+                  <a
+                    href="#pablo"
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/jobs") !== -1
+                        ? "text-blue-500 hover:text-blue-600"
+                        : "text-gray-800 hover:text-gray-600")
+                    }
+                  >
+                    <i
+                      className={
+                        "bx bxs-comment-detail mr-2 text-sm " +
+                        (router.pathname.indexOf("/jobs") !== -1
+                          ? "opacity-75"
+                          : "text-gray-400")
+                      }
+                    ></i>{" "}
+                    Jobs Management
+                  </a>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -1,16 +1,18 @@
-import React from "react";
+
 import { useFormik } from "formik";
 import router from "next/router";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import Axios from "axios";
 import { userActions } from "../redux/user";
 
 import { filterActions } from "../redux/filter";
+import React, { useEffect, useState } from "react";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
+  const [error, setError] = useState('');
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -42,7 +44,7 @@ export default function LoginScreen() {
           }
         })
         .catch((error) => {
-          alert(error);
+          setError('Error')
         });
     },
   });
@@ -80,7 +82,7 @@ export default function LoginScreen() {
                 type="password"
               />
             </div>
-
+            <p className="text-primary text-red-500">{error}</p>
             <div className="flex justify-center items-center mt-6">
               <button
                 type="submit"
