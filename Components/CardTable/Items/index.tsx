@@ -22,7 +22,10 @@ export default function index({ data, setActionSuccess }) {
         <img
           className="h-12 w-12 bg-white rounded-full border"
           alt="avatar"
-          src={data.avatarUrl}
+          src={
+            data.avatarUrl ||
+            "http://simpleicon.com/wp-content/uploads/user1.png"
+          }
         ></img>
         <span className="ml-3 font-bold text-gray-700 ">{data.fullName}</span>
       </th>

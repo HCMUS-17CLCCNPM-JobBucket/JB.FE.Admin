@@ -59,11 +59,12 @@ export default function JobInfo(props) {
                 <p className="text-lg font-bold">City</p>
                 <p className="text-gray-600">{job.city}</p>
               </div>
-              {/* <div>
+              <div>
                 <p className="text-lg font-bold">Category</p>
-
-                <p className="text-gray-600">{job.category.name}</p>
-              </div> */}
+                {job.category && (
+                  <p className="text-gray-600">{job.category.name}</p>
+                )}
+              </div>
               <div>
                 <p className="text-lg font-bold">Job Type</p>
                 <p className="text-gray-600">{job.jobForm}</p>
@@ -110,10 +111,10 @@ export default function JobInfo(props) {
               <p className=" font-bold">LOCATION</p>
               <p>{job.address}</p>
             </div>
-            {/* <div>
+            <div>
               <p className=" font-bold">COMPANY</p>
-              <p>{job.employer.fullName}</p>
-            </div> */}
+              {job.employer && <p>{job.employer.fullName}</p>}
+            </div>
           </div>
         </div>
       </div>

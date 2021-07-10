@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import { combineReducers } from "redux";
+import { createWrapper, HYDRATE} from 'next-redux-wrapper';
 
 const persistConfig = {
   key: "root",
