@@ -51,7 +51,7 @@ export default function JobInfo(props) {
                 <p className="text-lg text-gray-600">
                   ${job.minSalary} - ${job.maxSalary}
                 </p>
-                <div className="text-gray-500">Expires in {job.expireDate}</div>
+                <div className="text-gray-500">Expires in {job.expireDate.substr(0, 10)}</div>
               </div>
             </div>
             <div className="grid sm:grid-cols-3 md:grid-cols-5 gap-x-8">
@@ -70,12 +70,8 @@ export default function JobInfo(props) {
                 <p className="text-gray-600">{job.jobForm}</p>
               </div>
               <div>
-                <p className="text-lg font-bold">Gender</p>
-                <p className="text-gray-600">{job.gender}</p>
-              </div>
-              <div>
                 <p className="text-lg font-bold">Posted Date</p>
-                <p className="text-gray-600">{job.createdDate}</p>
+                <p className="text-gray-600">{job.createdDate.substr(0, 10)}</p>
               </div>
             </div>
             {job.description !== "" && (

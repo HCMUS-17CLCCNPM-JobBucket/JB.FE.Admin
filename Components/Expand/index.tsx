@@ -57,14 +57,14 @@ export default function Expanded(props) {
                 <i className="bx bx-check bx-xs mr-2"></i>
               ) : (
                 <a
-                  className="button border-b-2 text-black"
+                  className="button border-b-2 text-white"
                   onClick={onResolveReport}
                 >
                   <i className="bx bxs-edit bx-xs"></i>Resolve
                 </a>
               )}
             </Disclosure.Button>
-            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-white">
+            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black">
               {props.content}
             </Disclosure.Panel>
           </>
