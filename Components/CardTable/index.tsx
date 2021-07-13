@@ -21,7 +21,7 @@ export default function CardTable() {
     async function fetchdata() {
       setChangeFilter(false);
       const res = await Axios.post(
-        process.env.BASE_URL +"/user/listUser",
+        process.env.BASE_URL + "/user/listUser",
         {
           page: currentPage - 1,
           filters: [
@@ -46,7 +46,7 @@ export default function CardTable() {
       //   router.push("/");
       // }
       const res1 = await Axios.post(
-        process.env.BASE_URL +"/user/count",
+        process.env.BASE_URL + "/user/count",
         {
           filters: [
             {
