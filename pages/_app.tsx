@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/tailwind.css";
 import "tailwindcss/tailwind.css";
 import "boxicons/css/boxicons.min.css";
 import { Provider } from "react-redux";

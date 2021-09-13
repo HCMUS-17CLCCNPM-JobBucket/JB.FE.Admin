@@ -1,4 +1,3 @@
-
 import { useFormik } from "formik";
 import router from "next/router";
 import { useDispatch } from "react-redux";
@@ -11,7 +10,7 @@ import React, { useEffect, useState } from "react";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +27,7 @@ export default function LoginScreen() {
     }),
 
     onSubmit: async (values) => {
-      await Axios.post(process.env.BASE_URL +"/user/Login", {
+      await Axios.post(process.env.BASE_URL + "/user/Login", {
         email: values.username,
         password: values.password,
       })
@@ -39,61 +38,87 @@ export default function LoginScreen() {
               avatarUrl: res.data.data.user.avatarUrl,
             };
             dispatch(userActions.login(payload));
-            dispatch(filterActions.changeLocked(false))
+            dispatch(filterActions.changeLocked(false));
             router.push("/users");
           }
         })
         .catch((error) => {
-          setError('Error')
+          setError("Error");
         });
     },
   });
   return (
     <>
-      <div className="h-screen flex bg-gray-500">
-        <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
-          <h1 className="text-2xl font-medium text-primary mt-4 mb-12 text-center">
-            Log in to Admin <i className="bx bxs-user"></i>
-          </h1>
+      <main>
+        <section className="relative w-full h-full py-40 min-h-screen">
+          <div
+            className="absolute top-0 w-full h-full bg-gray-800 bg-no-repeat bg-full"
+            style={{
+              backgroundImage: "url('register_bg_2.png')",
+            }}
+          ></div>
+          <div className="container mx-auto px-4 h-full">
+            <div className="flex content-center items-center justify-center h-full">
+              <div className="w-full lg:w-4/12 px-4">
+                <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
+                  <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+                    <h1 className="text-2xl uppercase text-gray-600 font-bold  mt-4 mb-12 text-center">
+                      Log in to Admin <i className="bx bxs-user"></i>
+                    </h1>
+                    <form onSubmit={formik.handleSubmit}>
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Email
+                        </label>
+                        <input
+                          id="username"
+                          name="username"
+                          value={formik.values.username}
+                          onChange={formik.handleChange}
+                          type="email"
+                          className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          placeholder="Your Email"
+                          required
+                        />
+                      </div>
 
-          <form onSubmit={formik.handleSubmit}>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                id="username"
-                name="username"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                type="email"
-                className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
-                placeholder="Your Email"
-                required
-              />
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Password
+                        </label>
+                        <input
+                          className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          id="password"
+                          placeholder="Your Password"
+                          name="password"
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          type="password"
+                          required
+                        />
+                      </div>
+                      <div className="text-center mt-6">
+                        <button
+                          type="submit"
+                          className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        >
+                          Sign In
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
-                id="password"
-                placeholder="Your Password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                type="password"
-              />
-            </div>
-            <p className="text-primary text-red-500">{error}</p>
-            <div className="flex justify-center items-center mt-6">
-              <button
-                type="submit"
-                className="h-10 px-10 text-white transition-colors duration-150 bg-gray-500 rounded-lg focus:outline-none hover:bg-gray-600"
-              >
-                LOGIN
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+          </div>
+        </section>
+      </main>
     </>
   );
 }
