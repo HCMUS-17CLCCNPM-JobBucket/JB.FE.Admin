@@ -34,13 +34,13 @@ export default function MyModal(props) {
     date.setDate(date.getDate() + parseInt(duaration));
 
     await Axios.put(
-      process.env.BASE_URL +"/user/" + props.id + "/lock",
+      process.env.BASE_URL + "/UserManagement/Lock/" + props.id + "/Lock",
       { lockUntil: date.toISOString() },
       {
         headers: {
           Authorization:
             "Bearer " +
-            user.token,
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwibmFtZWlkIjoiMSIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwibmJmIjoxNjMzMDA3NzE4LCJleHAiOjE2MzMwMTQ5MTgsImlhdCI6MTYzMzAwNzcxOCwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.8aB_ZYTMMIr2AmGYzcU5eaG_8B6J1BlvyIG-HyBil4g",
         },
       }
     )

@@ -3,7 +3,6 @@ import { Fragment, useState } from "react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-
 export default function MyModal(props) {
   let [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state: any) => state.user);
@@ -18,13 +17,13 @@ export default function MyModal(props) {
 
   async function UnlockUser() {
     await Axios.put(
-      process.env.BASE_URL +"/user/" + props.id + "/unlock",
+      process.env.BASE_URL + "/UserManagement/Unlock/" + props.id + "/Unlock",
       {},
       {
         headers: {
           Authorization:
             "Bearer " +
-            user.token,
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwibmFtZWlkIjoiMSIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwibmJmIjoxNjMzMDA3NzE4LCJleHAiOjE2MzMwMTQ5MTgsImlhdCI6MTYzMzAwNzcxOCwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.8aB_ZYTMMIr2AmGYzcU5eaG_8B6J1BlvyIG-HyBil4g",
         },
       }
     )
@@ -46,7 +45,7 @@ export default function MyModal(props) {
         onClick={openModal}
         className="h-10 px-10 text-white transition-colors duration-150 bg-green-500 rounded-lg focus:outline-none hover:bg-green-600"
       >
-        <i className='bx bxs-lock-open bx-xs mr-2' ></i>
+        <i className="bx bxs-lock-open bx-xs mr-2"></i>
         UNLOCK
       </button>
 

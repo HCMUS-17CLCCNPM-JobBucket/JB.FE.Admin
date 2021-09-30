@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
   const Layout = Component.layout || (({ children }) => <>{children}</>);
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<div>loading</div>} persistor={persistor}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

@@ -27,11 +27,12 @@ export default function LoginScreen() {
     }),
 
     onSubmit: async (values) => {
-      await Axios.post(process.env.BASE_URL + "/user/Login", {
-        email: values.username,
+      await Axios.post(process.env.BASE_URL + "/Authenticate/Login", {
+        username: values.username,
         password: values.password,
       })
         .then((res) => {
+          console.log(res)
           if (res.status == 200) {
             const payload = {
               token: res.data.data.token,
@@ -43,7 +44,7 @@ export default function LoginScreen() {
           }
         })
         .catch((error) => {
-          setError("Error");
+          setError("Username or password incorrect");
         });
     },
   });

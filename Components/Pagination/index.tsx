@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PaginationItem from "./PaginationItem";
-function Pagination({ pages, currentPage, setCurrentPage }) {
-  const n = Math.floor(pages / 10) === 0 ? 1 : Math.floor(pages / 10) + 1;
+function Pagination({size, pages, currentPage, setCurrentPage }) {
+  const n = Math.floor(pages / size) === 0 ? 1 : Math.floor(pages / size) + 1;
   //Set number of pages
   const numberOfPages = [];
   for (let i = 1; i <= n; i++) {

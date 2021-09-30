@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { filterActions } from "../../redux/filter";
 import { userActions } from "../../redux/user";
 export default function CardTable() {
+  const size = 10;
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.user);
   const filter = useSelector((state: any) => state.filter);
@@ -20,51 +21,65 @@ export default function CardTable() {
   useEffect(() => {
     async function fetchdata() {
       setChangeFilter(false);
-      const res = await Axios.post(
-        process.env.BASE_URL + "/user/listUser",
+      const res = await Axios.get(
+        process.env.BASE_URL + "/UserManagement/ListUsers/listUser",
         {
-          page: currentPage - 1,
-          filters: [
-            {
-              property: "isLockedOut",
-              value: isLockout,
-              comparison: "==",
-            },
-          ],
-        },
-        {
+          params: { Page: currentPage, Size: size },
           headers: {
-            Authorization: "Bearer " + users.token,
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwibmFtZWlkIjoiMSIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwibmJmIjoxNjMzMDA3NzE4LCJleHAiOjE2MzMwMTQ5MTgsImlhdCI6MTYzMzAwNzcxOCwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.8aB_ZYTMMIr2AmGYzcU5eaG_8B6J1BlvyIG-HyBil4g",
           },
         }
+
+        // {
+        //   page: currentPage,
+        //   size: 10,
+        //   // filters: [
+        //   //   {
+        //   //     property: "isLockedOut",
+        //   //     value: isLockout,
+        //   //     comparison: "==",
+        //   //   },
+        //   // ],
+        // },
+        // {
+        //   headers: {
+        //     Authorization:
+        //       "Bearer " +
+        //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwibmFtZWlkIjoiMSIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwibmJmIjoxNjMyNDAzNjM0LCJleHAiOjE2MzI0MTA4MzQsImlhdCI6MTYzMjQwMzYzNCwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.3ostaTYTCYR6OIuBeg6YhQgnXsABYW4wNWwxQeyjTc0",
+        //   },
+        // }
       );
+      console.log(res);
       if (res.status === 200) {
-        setUser(res.data.data);
+        setUser(res.data);
+        console.log(user);
       }
       // if (res.status === 401) {
       //   dispatch(userActions.logout());
       //   router.push("/");
       // }
-      const res1 = await Axios.post(
-        process.env.BASE_URL + "/user/count",
-        {
-          filters: [
-            {
-              property: "isLockedOut",
-              value: isLockout,
-              comparison: "==",
-            },
-          ],
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + users.token,
-          },
-        }
-      );
-      if (res1.status === 200) {
-        setLength(res1.data.data);
-      }
+      // const res1 = await Axios.post(
+      //   process.env.BASE_URL + "/UserManagement/CountUser/count",
+      //   {
+      //     filters: [
+      //       {
+      //         property: "isLockedOut",
+      //         value: isLockout,
+      //         comparison: "==",
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: "Bearer " + users.token,
+      //     },
+      //   }
+      // );
+      // if (res1.status === 200) {
+      //   setLength(res1.data.data);
+      // }
       // if (res.status === 401) {
       //   dispatch(userActions.logout());
       //   router.push("/");
@@ -143,6 +158,7 @@ export default function CardTable() {
           <div className="my-4">
             {length != 0 ? (
               <Pagination
+                size = {size}
                 pages={length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
