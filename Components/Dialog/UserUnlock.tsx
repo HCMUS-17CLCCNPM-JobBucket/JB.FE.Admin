@@ -17,7 +17,7 @@ export default function MyModal(props) {
 
   async function UnlockUser() {
     await Axios.put(
-      process.env.BASE_URL + "/userManagement/Unlock/" + props.id,
+      process.env.BASE_URL + "/job/Unlock/" + props.id,
       {},
       {
         headers: {
@@ -87,11 +87,11 @@ export default function MyModal(props) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Unlock User
+                  Unlock job {props.title}
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Do you want to unlock {props.fullname}?
+                    Do you want to unlock {props.title}?
                   </p>
                 </div>
 

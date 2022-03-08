@@ -5,17 +5,8 @@ import { parse } from "node:path";
 import { useSelector } from "react-redux";
 
 export default function MyModal(props) {
-  // add a day
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state: any) => state.user);
-  const [lockList, setLockList] = useState([
-    { name: "7 days", value: 7 },
-    { name: "1 months", value: 30 },
-    { name: "6 months", value: 180 },
-  ]);
-
-  const [duaration, setDuaration] = useState("7");
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -24,23 +15,14 @@ export default function MyModal(props) {
     setIsOpen(true);
   }
 
-  function handleDurationChange(e) {
-    setDuaration(e.target.value);
-  }
-
   async function onLockUser() {
-    let date = new Date();
-    // add a day
-    date.setDate(date.getDate() + parseInt(duaration));
 
     await Axios.put(
-      process.env.BASE_URL + "/UserManagement/Lock/" + props.id + "/Lock",
-      { lockUntil: date.toISOString() },
+      process.env.BASE_URL + "/userManagement/Lock/" + props.id,
+      {},
       {
         headers: {
-          Authorization:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpiYWRtaW5Aam9iYnVja2V0LmxvY2FsIiwibmFtZWlkIjoiMSIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwibmJmIjoxNjMzMDA3NzE4LCJleHAiOjE2MzMwMTQ5MTgsImlhdCI6MTYzMzAwNzcxOCwiaXNzIjoiam9iYnVja2V0LmNvbSIsImF1ZCI6ImpvYmJ1Y2tldC5jb20ifQ.8aB_ZYTMMIr2AmGYzcU5eaG_8B6J1BlvyIG-HyBil4g",
+          Authorization: "Bearer " + user.token,
         },
       }
     )
@@ -62,7 +44,7 @@ export default function MyModal(props) {
         onClick={openModal}
         className="h-10 px-10 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:outline-none hover:bg-red-600"
       >
-        <i className='bx bxs-lock bx-xs mr-2' ></i>
+        <i className="bx bxs-lock bx-xs mr-2"></i>
         LOCK
       </button>
 
@@ -108,7 +90,7 @@ export default function MyModal(props) {
                 >
                   Lock user {props.fullname}
                 </Dialog.Title>
-                <div className="mt-2">
+                {/* <div className="mt-2">
                   <p className="text-sm text-gray-500">
                     Choose how long the user be lockout?
                   </p>
@@ -122,7 +104,7 @@ export default function MyModal(props) {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
                 <div className="mt-4 flex justify-between ">
                   <button
                     type="button"

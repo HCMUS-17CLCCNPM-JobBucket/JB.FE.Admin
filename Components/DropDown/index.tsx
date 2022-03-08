@@ -41,7 +41,10 @@ export default function userDropDown({}: Props): ReactElement {
         <div className="items-center flex">
           <span className="w-12 h-12 text-sm text-white bg-gray-300 inline-flex items-center justify-center rounded-full">
             <img
-              src={user.avatarUrl}
+              src={
+                user.avatarUrl ||
+                "http://simpleicon.com/wp-content/uploads/user1.png"
+              }
               alt="admin"
               className="w-full rounded-full align-middle border-none shadow-lg"
             />

@@ -1,12 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Axios from "axios";
+import { parse } from "node:path";
 import { useSelector } from "react-redux";
 
 export default function MyModal(props) {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state: any) => state.user);
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -15,9 +15,9 @@ export default function MyModal(props) {
     setIsOpen(true);
   }
 
-  async function UnlockUser() {
+  async function onLockUser() {
     await Axios.put(
-      process.env.BASE_URL + "/userManagement/Unlock/" + props.id,
+      process.env.BASE_URL + "/job/Lock/" + props.id,
       {},
       {
         headers: {
@@ -26,8 +26,8 @@ export default function MyModal(props) {
       }
     )
       .then((res) => {
-        if ((res.status = 200)) {
-          props.unlocksuccess(true);
+        if (res.status == 200) {
+          props.locksuccess(true);
           setIsOpen(false);
         }
       })
@@ -41,10 +41,10 @@ export default function MyModal(props) {
       <button
         type="button"
         onClick={openModal}
-        className="h-10 px-10 text-white transition-colors duration-150 bg-green-500 rounded-lg focus:outline-none hover:bg-green-600"
+        className="h-10 px-10 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:outline-none hover:bg-red-600"
       >
-        <i className="bx bxs-lock-open bx-xs mr-2"></i>
-        UNLOCK
+        <i className="bx bxs-lock bx-xs mr-2"></i>
+        LOCK
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -87,21 +87,22 @@ export default function MyModal(props) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Unlock User
+                  Lock job {props.title}
                 </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Do you want to unlock {props.fullname}?
-                  </p>
-                </div>
-
-                <div className="mt-4">
+                <div className="mt-4 flex justify-between ">
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-400 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={UnlockUser}
+                    onClick={onLockUser}
                   >
-                    Yes
+                    Lock
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-400 border border-transparent rounded-md hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    onClick={closeModal}
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>

@@ -1,46 +1,41 @@
 import React, { useEffect, useState } from "react";
 import router from "next/router";
+import LockDialog from "../../Dialog/UserLock";
+import UnlockDialog from "../../Dialog/UserUnlock";
 
 export default function index({ data, setActionSuccess }) {
-//   useEffect(() => {
-//     if (data.isLockedOut) {
-//       let countdown = Date.parse(data.lockoutEnd) - Date.now();
-//       setTimeout(() => {
-//         setActionSuccess(true);
-//       }, countdown);
-//     }
-//   }, []);
-
   return (
     <tr>
       <th
         className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center cursor-pointer"
-        onClick={() => router.push("/jobs/" + data.id)}
       >
-        {/* <img
+        <img
           className="h-12 w-12 bg-white rounded-full border"
           alt="avatar"
-          src={data.avatarUrl}
-        ></img> */}
-        <span className="ml-3 font-bold text-gray-700 " >{data.title}</span>
+          src={
+            data.imageUrls ||
+            "http://simpleicon.com/wp-content/uploads/user1.png"
+          }
+        ></img>
+        <span className="ml-3 font-bold text-gray-700 ">{data.title}</span>
       </th>
-      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 cursor-pointer" onClick={() => router.push("/users/" + data.employer.id)}>
-        {data.employer.fullName || "N/A"}
+      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 cursor-pointer">
+        {data.employer.userName || "N/A"}
       </td>
       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-        {/* {data.isLockedOut ? (
+        {data.activeStatus == 2 ? (
           <UnlockDialog
             id={data.id}
-            fullname={data.fullName}
+            title={data.title}
             unlocksuccess={setActionSuccess}
           ></UnlockDialog>
         ) : (
           <LockDialog
             id={data.id}
-            fullname={data.fullName}
+            title={data.title}
             locksuccess={setActionSuccess}
           ></LockDialog>
-        )} */}
+        )}
       </td>
     </tr>
   );

@@ -1,16 +1,17 @@
 import { useFormik } from "formik";
-import router from "next/router";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import Axios from "axios";
 import { userActions } from "../redux/user";
-
+import { toast } from "react-toastify";
 import { filterActions } from "../redux/filter";
 import React, { useEffect, useState } from "react";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -27,25 +28,21 @@ export default function LoginScreen() {
     }),
 
     onSubmit: async (values) => {
-      await Axios.post(process.env.BASE_URL + "/Authenticate/Login", {
-        username: values.username,
-        password: values.password,
-      })
-        .then((res) => {
-          console.log(res)
-          if (res.status == 200) {
-            const payload = {
-              token: res.data.data.token,
-              avatarUrl: res.data.data.user.avatarUrl,
-            };
-            dispatch(userActions.login(payload));
-            dispatch(filterActions.changeLocked(false));
-            router.push("/users");
-          }
-        })
-        .catch((error) => {
-          setError("Username or password incorrect");
-        });
+      const res = await Axios.post(
+        process.env.BASE_URL + "/Authenticate/Login",
+        {
+          username: values.username,
+          password: values.password,
+        }
+      );
+      if (res.status === 200) {
+        const payload = {
+          token: res.data.token,
+          avatarUrl: res.data.user.avatarUrl,
+        };
+        dispatch(userActions.login(payload));
+        router.push("/users");
+      }
     },
   });
   return (

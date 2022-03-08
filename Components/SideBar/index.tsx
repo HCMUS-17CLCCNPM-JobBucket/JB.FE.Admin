@@ -62,7 +62,7 @@ export default function sideBar({}: Props): ReactElement {
                     className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
                     onClick={() => setCollapseShow("hidden")}
                   >
-                    <i className='bx bx-x'></i>
+                    <i className="bx bx-x"></i>
                   </button>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export default function sideBar({}: Props): ReactElement {
                     <i
                       className={
                         "bx bxs-user mr-2 text-sm " +
-                        (router.pathname.indexOf("/users") !== -1 
+                        (router.pathname.indexOf("/users") !== -1
                           ? "opacity-75"
                           : "text-gray-400")
                       }
@@ -98,7 +98,7 @@ export default function sideBar({}: Props): ReactElement {
                 </Link>
               </li>
 
-              <li className="items-center">
+              {/* <li className="items-center">
                 <Link href="/reports">
                   <a
                     href="#pablo"
@@ -120,7 +120,7 @@ export default function sideBar({}: Props): ReactElement {
                     Reports Management
                   </a>
                 </Link>
-              </li>
+              </li> */}
               <li className="items-center">
                 <Link href="/jobs">
                   <a

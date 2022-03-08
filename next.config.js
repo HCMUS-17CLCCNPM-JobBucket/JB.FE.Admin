@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    BASE_URL: "https://jobbucket.azurewebsites.net/api",
+    BASE_URL: "https://api.jobbucket.xyz/api",
   },
 };
