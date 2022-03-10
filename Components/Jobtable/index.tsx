@@ -11,33 +11,36 @@ import { toast } from "react-toastify";
 export default function JobTable() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const filter = useSelector((state: any) => state.filter);
   const [job, setJob] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [length, setLength] = useState(0);
-  const [isLockout, setisLockout] = useState(filter.locked_fliter);
   const [changeFilter, setChangeFilter] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function fetchdata() {
       setLoading(true);
       setChangeFilter(false);
       const res = await Axios.get(process.env.BASE_URL + "/job/List", {
+        params: { page: page },
         headers: {
           Authorization: "Bearer " + user.token,
         },
       })
         .then((res) => {
-          setJob(res.data);
-          setLoading(false);
+          if (res.data.length > 0) {
+            setJob(res.data);
+            setLoading(false);
+          } else {
+            toast.warning("last page");
+            setPage(page - 1);
+          }
         })
         .catch((error) => {
           toast.error(error.response.data.message);
         });
     }
     fetchdata();
-  }, [changeFilter]);
+  }, [page,changeFilter]);
 
   return (
     <>
@@ -51,7 +54,26 @@ export default function JobTable() {
         </div>
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
-
+          <div className="ml-6 mb-4 flex gap-4">
+            {page > 1 && (
+              <button
+                type="button"
+                onClick={() => setPage(page - 1)}
+                className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
+              >
+                <i className="bx bx-left-arrow-alt"></i>
+                Previous
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setPage(page + 1)}
+              className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
+            >
+              <i className="bx bx-right-arrow-alt"></i>
+              Next
+            </button>
+          </div>
           <Items
             loading={loading}
             job={job}

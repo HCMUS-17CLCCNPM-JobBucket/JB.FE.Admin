@@ -11,7 +11,6 @@ export default function CardTable() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const [users, setUsers] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [changeFilter, setChangeFilter] = useState(false);
@@ -23,19 +22,20 @@ export default function CardTable() {
       const res = await Axios.get(
         process.env.BASE_URL + "/userManagement/List",
         {
-          params: {
-            page: page,
-            size: 10,
-          },
+          params: { page: page },
           headers: {
             Authorization: "Bearer " + user.token,
           },
         }
       )
         .then((res) => {
-          setUsers([...users, ...res.data]);
-          setHasMore(res.data.length > 0);
-          setLoading(false);
+          if (res.data.length > 0) {
+            setUsers(res.data);
+            setLoading(false);
+          } else {
+            toast.warning("last page");
+            setPage(page - 1);
+          }
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -55,11 +55,29 @@ export default function CardTable() {
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
+          <div className="ml-6 mb-4 flex gap-4">
+            {page > 1 && (
+              <button
+                type="button"
+                onClick={() => setPage(page - 1)}
+                className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
+              >
+                <i className="bx bx-left-arrow-alt"></i>
+                Previous
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setPage(page + 1)}
+              className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
+            >
+              <i className="bx bx-right-arrow-alt"></i>
+              Next
+            </button>
+          </div>
           <Items
-            hasMore={hasMore}
             loading={loading}
             users={users}
-            setPage={() => setPage(page + 1)}
             setActionSuccess={setChangeFilter}
           />
         </div>

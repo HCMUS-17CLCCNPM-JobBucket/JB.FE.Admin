@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const formik = useFormik({
