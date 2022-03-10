@@ -34,15 +34,18 @@ export default function LoginScreen() {
           username: values.username,
           password: values.password,
         }
-      );
-      if (res.status === 200) {
-        const payload = {
-          token: res.data.token,
-          avatarUrl: res.data.user.avatarUrl,
-        };
-        dispatch(userActions.login(payload));
-        router.push("/users");
-      }
+      )
+        .then((res) => {
+          const payload = {
+            token: res.data.token,
+            avatarUrl: res.data.user.avatarUrl,
+          };
+          dispatch(userActions.login(payload));
+          router.push("/users");
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
     },
   });
   return (

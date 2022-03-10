@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { filterActions } from "../../redux/filter";
 import user, { userActions } from "../../redux/user";
+import { toast } from "react-toastify";
 export default function JobTable() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
@@ -16,19 +17,24 @@ export default function JobTable() {
   const [length, setLength] = useState(0);
   const [isLockout, setisLockout] = useState(filter.locked_fliter);
   const [changeFilter, setChangeFilter] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
+      setLoading(true);
       setChangeFilter(false);
       const res = await Axios.get(process.env.BASE_URL + "/job/List", {
         headers: {
           Authorization: "Bearer " + user.token,
         },
-      });
-      if (res.status === 200) {
-        console.log(res)
-        setJob(res.data);
-      }
+      })
+        .then((res) => {
+          setJob(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
     }
     fetchdata();
   }, [changeFilter]);
@@ -45,30 +51,12 @@ export default function JobTable() {
         </div>
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
-          <table className="items-center w-full bg-transparent border-collapse">
-            <thead>
-              <tr>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Title
-                </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Employer
-                </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left bg-gray-100 text-gray-600 border-gray-200 ">
-                  Lock Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {job.map((data, key) => (
-                <Items
-                  data={data}
-                  key={key}
-                  setActionSuccess={setChangeFilter}
-                ></Items>
-              ))}
-            </tbody>
-          </table>
+
+          <Items
+            loading={loading}
+            job={job}
+            setActionSuccess={setChangeFilter}
+          ></Items>
         </div>
       </div>
     </>

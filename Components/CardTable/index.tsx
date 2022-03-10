@@ -23,17 +23,23 @@ export default function CardTable() {
       const res = await Axios.get(
         process.env.BASE_URL + "/userManagement/List",
         {
+          params: {
+            page: page,
+            size: 10,
+          },
           headers: {
             Authorization: "Bearer " + user.token,
           },
         }
-      );
-      if (res.status === 200) {
-        console.log(res);
-        setUsers([...users, ...res.data]);
-        setHasMore(res.data.length > 0);
-        setLoading(false);
-      }
+      )
+        .then((res) => {
+          setUsers([...users, ...res.data]);
+          setHasMore(res.data.length > 0);
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
     }
     fetchdata();
   }, [page, changeFilter]);
@@ -49,7 +55,7 @@ export default function CardTable() {
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
-        <Items
+          <Items
             hasMore={hasMore}
             loading={loading}
             users={users}

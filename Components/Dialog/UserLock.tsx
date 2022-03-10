@@ -3,6 +3,7 @@ import { Fragment, useState } from "react";
 import Axios from "axios";
 import { parse } from "node:path";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function MyModal(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,13 +27,12 @@ export default function MyModal(props) {
       }
     )
       .then((res) => {
-        if (res.status == 200) {
-          props.locksuccess(true);
-          setIsOpen(false);
-        }
+        toast.success("lock success");
+        props.locksuccess(true);
+        setIsOpen(false);
       })
       .catch((error) => {
-        alert(error);
+        toast.error(error.response.data.message);
       });
   }
 

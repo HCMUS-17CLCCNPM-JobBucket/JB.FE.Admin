@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function MyModal(props) {
   let [isOpen, setIsOpen] = useState(false);
@@ -26,13 +27,12 @@ export default function MyModal(props) {
       }
     )
       .then((res) => {
-        if ((res.status = 200)) {
-          props.unlocksuccess(true);
-          setIsOpen(false);
-        }
+        toast.success("unlock success");
+        props.unlocksuccess(true);
+        setIsOpen(false);
       })
       .catch((error) => {
-        alert(error);
+        toast.error(error.response.data.message);
       });
   }
 
