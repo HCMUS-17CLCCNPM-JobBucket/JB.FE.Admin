@@ -101,6 +101,7 @@ export default function LoginScreen() {
                           onChange={formik.handleChange}
                           type="password"
                           required
+                          minLength={8}
                         />
                       </div>
                       <div className="text-center mt-6">

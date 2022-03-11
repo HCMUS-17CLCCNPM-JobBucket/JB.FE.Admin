@@ -14,9 +14,11 @@ export default function CardTable() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [changeFilter, setChangeFilter] = useState(false);
+  const [last, setLast] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
+      setLast(false);
       setChangeFilter(false);
       setLoading(true);
       const res = await Axios.get(
@@ -29,12 +31,24 @@ export default function CardTable() {
         }
       )
         .then((res) => {
-          if (res.data.length > 0) {
-            setUsers(res.data);
-            setLoading(false);
-          } else {
-            toast.warning("last page");
-            setPage(page - 1);
+          setUsers(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+      const res1 = await Axios.get(
+        process.env.BASE_URL + "/userManagement/List",
+        {
+          params: { page: page + 1 },
+          headers: {
+            Authorization: "Bearer " + user.token,
+          },
+        }
+      )
+        .then((res) => {
+          if (res.data.length == 0) {
+            setLast(true);
           }
         })
         .catch((error) => {
@@ -66,14 +80,16 @@ export default function CardTable() {
                 Previous
               </button>
             )}
-            <button
-              type="button"
-              onClick={() => setPage(page + 1)}
-              className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
-            >
-              <i className="bx bx-right-arrow-alt"></i>
-              Next
-            </button>
+            {!last && (
+              <button
+                type="button"
+                onClick={() => setPage(page + 1)}
+                className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
+              >
+                <i className="bx bx-right-arrow-alt"></i>
+                Next
+              </button>
+            )}
           </div>
           <Items
             loading={loading}

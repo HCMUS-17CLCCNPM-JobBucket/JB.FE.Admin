@@ -15,9 +15,11 @@ export default function JobTable() {
   const [changeFilter, setChangeFilter] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [last, setLast] = useState(false);
 
   useEffect(() => {
     async function fetchdata() {
+      setLast(false);
       setLoading(true);
       setChangeFilter(false);
       const res = await Axios.get(process.env.BASE_URL + "/job/List", {
@@ -27,12 +29,21 @@ export default function JobTable() {
         },
       })
         .then((res) => {
-          if (res.data.length > 0) {
-            setJob(res.data);
-            setLoading(false);
-          } else {
-            toast.warning("last page");
-            setPage(page - 1);
+          setJob(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+      const res1 = await Axios.get(process.env.BASE_URL + "/job/List", {
+        params: { page: page + 1 },
+        headers: {
+          Authorization: "Bearer " + user.token,
+        },
+      })
+        .then((res) => {
+          if (res.data.length == 0) {
+            setLast(true);
           }
         })
         .catch((error) => {
@@ -40,7 +51,7 @@ export default function JobTable() {
         });
     }
     fetchdata();
-  }, [page,changeFilter]);
+  }, [page, changeFilter]);
 
   return (
     <>
@@ -65,14 +76,16 @@ export default function JobTable() {
                 Previous
               </button>
             )}
-            <button
-              type="button"
-              onClick={() => setPage(page + 1)}
-              className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
-            >
-              <i className="bx bx-right-arrow-alt"></i>
-              Next
-            </button>
+            {!last && (
+              <button
+                type="button"
+                onClick={() => setPage(page + 1)}
+                className="h-10 px-4 text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:outline-none hover:bg-gray-500"
+              >
+                <i className="bx bx-right-arrow-alt"></i>
+                Next
+              </button>
+            )}
           </div>
           <Items
             loading={loading}
