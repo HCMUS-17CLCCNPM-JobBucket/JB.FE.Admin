@@ -70,7 +70,7 @@ export default function Reports() {
 
   return (
     <div className="pt-4 md:pt-32">
-      <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded bg-white">
+      {/* <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded bg-white">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -124,7 +124,7 @@ export default function Reports() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
